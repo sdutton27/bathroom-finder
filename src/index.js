@@ -7,7 +7,7 @@ import UserContextProvider from './context/UserContext';
 import { initializeApp } from "firebase/app";
 
 const firebaseConfig = {
-  apiKey: "AIzaSyDR9Y6zy7jtXkmZGb8gOkk6VbmHvHLHC9s",
+  apiKey: process.env.REACT_APP_GOOGLE_MAPS_API_KEY,
   authDomain: "gnb-finder.firebaseapp.com",
   projectId: "gnb-finder",
   storageBucket: "gnb-finder.appspot.com",
