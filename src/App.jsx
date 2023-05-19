@@ -5,8 +5,6 @@ import Navbar from './components/Navbar/Navbar'
 import MapPage from './views/MapPage'
 import Home from './views/Home/Home'
 
-import Test from './views/Test/Test'
-
 import { UserContext } from './context/UserContext';
 
 import './app.css';
@@ -46,8 +44,10 @@ export default function App() {
          <Navbar />
          <Routes>
              <Route path="/" element={<Home />}/>
+             <Route path="/about" element={<About />}/>
              <Route path="/map" element={<MapPage />}/>
-             <Route path="/testing" element={<Test />}/>
+             <Route path="/favorites" element={<FavoritesPage />}/>
+             <Route path="/profile" element={<Profile />}/>
          </Routes>
       </div>
   )

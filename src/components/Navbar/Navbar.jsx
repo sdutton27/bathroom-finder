@@ -11,6 +11,7 @@ export default function Navbar() {
     // console.log(user)
   return (
     <div className='nav-container'>
+      <div className='nav-background'/>
       <nav className="navbar">
         <a href="#">Home</a>
         <a href="#">About</a>
@@ -19,6 +20,13 @@ export default function Navbar() {
         <a href="#">Profile</a>
         <div className="animation nav-home"></div>
       </nav>
+      <div id="scroll-container">
+        <img id="clouds-1" src={ require('./clouds.png') }/>
+        <img id="clouds-2" src={ require('./clouds.png') }/>
+        <img id="tree-1" src={ require('./tree.png') }/>
+        <img id="tree-3" src={ require('./tree_3.png') }/>
+        <img id="wc" src={ require('./public-toilet.png') }/>
+      </div>
     </div>
 
     // <></>

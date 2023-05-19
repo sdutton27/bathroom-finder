@@ -90,6 +90,7 @@
     text-align: center; */
     /* position: absolute; */
     position: absolute;
+    margin-top: 57px; /* TO ACCOUNT FOR THE NAVBAR */
     height: 100%;
     display: flex;
     flex-direction: column;

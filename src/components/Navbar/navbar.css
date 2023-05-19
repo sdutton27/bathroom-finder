@@ -4,7 +4,10 @@
 
 .nav-container {
     /* background-color: rgb(8, 0, 42); */
-    background-image: url("highway-animation.gif");
+
+    /* background-image: url("highway-animation.gif"); */
+    /* background-color: rgb(67, 190, 235); */
+
     /* background-position: 20px; */
     /* background-position: 240px auto;  */
     background-position: 0% 24%;
@@ -13,6 +16,7 @@
     margin-top:0px;
     position: absolute;
     width:100%;
+    border-bottom: 12px solid rgb(96, 96, 96);
 }
 
 .navbar {
@@ -22,7 +26,7 @@
 }
 
 nav {
-	margin: 10px auto 10px;
+	margin: 10px auto 0px;
 
 	/* position: relative; */
 	width: 590px;
@@ -41,6 +45,7 @@ nav a {
 	display: inline-block;
 	position: relative;
 	z-index: 1;
+    /* z-index:0; */
 	text-decoration: none;
 	text-transform: uppercase;
 	text-align: center;
@@ -51,7 +56,9 @@ nav .animation {
 	position: absolute;
 	height: 100%;
 	top: 0;
-	z-index: 0;
+	/* z-index: 0; */
+    z-index: 0;
+    /* z-index: 1; */
 	transition: all .5s ease 0s;
 	/* border-radius: 8px; */
     background-image: url("bus.png");
@@ -123,3 +130,115 @@ nav .nav-profile, a:nth-child(5):hover~.animation {
 	/* background-color: #e67e2277; */
 }
 
+/* Moving background */
+#scroll-container {
+    width: 100vw;
+    overflow: hidden;
+    position: absolute; 
+    /* position: relative; */
+    top: 0;
+    /* z-index: -1; */
+    z-index:-1;
+}
+
+/* so that the images appear in the right order */
+.nav-background {
+    z-index: -3;
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    background: rgb(238,174,202);
+background: radial-gradient(circle, rgba(238,174,202,1) 0%, rgba(148,187,233,1) 100%);
+}
+
+
+#tree-1 {
+    margin-top: 11px;
+    height: 35px;
+    -moz-transform: translateX(100vw);
+    -webkit-transform: translateX(100vw);
+    transform: translateX(100vw);
+    -moz-animation: scroll 15s linear infinite;
+    -webkit-animation: scroll 15s linear infinite;
+    animation: scroll 15s linear infinite;
+}
+
+#tree-3 {
+    margin-top: 11px;
+    height: 35px;
+    -moz-transform: translateX(100vw);
+    -webkit-transform: translateX(100vw);
+    transform: translateX(100vw);
+    -moz-animation: scroll 15s linear infinite;
+    -webkit-animation: scroll 15s linear infinite;
+    animation: scroll 15s linear infinite;
+    animation-delay: 5s;
+}
+
+#wc {
+    margin-top: 11px;
+    height: 35px;
+    -moz-transform: translateX(100vw);
+    -webkit-transform: translateX(100vw);
+    transform: translateX(100vw);
+    -moz-animation: scroll 15s linear infinite;
+    -webkit-animation: scroll 15s linear infinite;
+    animation: scroll 15s linear infinite;
+    animation-delay: 10s;
+}
+
+#clouds-1 { 
+    /* z-index: -2; */
+    height: 25px;
+    opacity: .7;
+    -moz-transform: translateX(100vw);
+    -webkit-transform: translateX(100vw);
+    transform: translateX(100vw);
+    -moz-animation: scroll 25s linear infinite;
+    -webkit-animation: scroll 25s linear infinite;
+    animation: scroll 25s linear infinite;
+    animation-delay:0s;
+}
+
+#clouds-2 { 
+    /* z-index: -2; */
+    opacity: .7;
+    height: 25px;
+    -moz-transform: translateX(100vw);
+    -webkit-transform: translateX(100vw);
+    transform: translateX(100vw);
+    -moz-animation: scroll 25s linear infinite;
+    -webkit-animation: scroll 25s linear infinite;
+    animation: scroll 25s linear infinite;
+    animation-delay: 10s;
+}
+
+
+#scroll-container img {
+    z-index: -1;
+    /* position: absolute; */
+	/* bottom:12px;
+    right:0;
+	z-index: 0; */
+
+    /* margin-top: 10px;
+    height: 35px; */
+    /* position: absolute; */
+    /* -moz-animation: scroll 15s linear infinite;
+    -webkit-animation: scroll 15s linear infinite;
+    animation: scroll 15s linear infinite; */
+    
+}
+  
+  @keyframes scroll {
+    from {
+      -moz-transform: translateX(100vw);
+      -webkit-transform: translateX(100vw);
+      transform: translateX(100vw);
+    }
+    to {
+      -moz-transform: translateX(-100vw);
+      -webkit-transform: translateX(-100vw);
+      transform: translateX(-100vw);
+    }
+  }
