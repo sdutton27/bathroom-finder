@@ -16,6 +16,9 @@ const UserContextProvider = ({children}) => {
     //const [user, setUser] = useState({})
     const [user, setUser] = useState(getUserFromLocalStorage)
     
+    const [showHomepage, setShowHomepage] = useState('invisible-home-page')
+    const [userUnlocked, setUserUnlocked] = useState('locked')
+
     const logMeIn = (user) => {
         setUser(user)
         localStorage.setItem('user_bathroom_finder', JSON.stringify(user))
@@ -24,6 +27,9 @@ const UserContextProvider = ({children}) => {
     const logMeOut = () => {
         setUser({})
         localStorage.removeItem('user_bathroom_finder')
+        setShowHomepage('invisible-home-page')
+        console.log(showHomepage)
+        setUserUnlocked('locked')
         navigate('/')
     }
 
@@ -34,14 +40,14 @@ const UserContextProvider = ({children}) => {
     //     logMeOut, logMeOut,
     // }
 
-    const userCtx = {
-        user, setUser, logMeIn, logMeOut,
+    const userContext = {
+        user, setUser, logMeIn, logMeOut, showHomepage, setShowHomepage, userUnlocked, setUserUnlocked,
     }
 
     return (
         <>
         {/* <UserContext.Provider value={[user, setUser]}> */}
-        <UserContext.Provider value={userCtx}>
+        <UserContext.Provider value={userContext}>
         {/* <UserContext.Provider value={user}> */}
             { children }
         </UserContext.Provider>

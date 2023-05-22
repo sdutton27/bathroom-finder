@@ -11,9 +11,7 @@ import { getAuth, signInWithPopup, GoogleAuthProvider } from "firebase/auth";
 import GoogleButton from 'react-google-button'
 
 
-
-
-export default function Login({userUnlocked, setUserUnlocked}) {
+export default function Auth() {
     const [loginEmailText, setLoginEmailText] = useState('')
     const [loginPasswordText, setLoginPasswordText] = useState('')
     const [signupEmailText, setSignupEmailText] = useState('')
@@ -30,7 +28,7 @@ export default function Login({userUnlocked, setUserUnlocked}) {
     // for the sliding doors
     // const [checked, setChecked] = useState(true)
 
-    const {user, setUser, logMeIn, logMeOut} = useContext(UserContext)
+    const {user, setUser, logMeIn, logMeOut, userUnlocked, setUserUnlocked} = useContext(UserContext)
 
     const handleLockClick = (e) => {
         if (greenClass === 'green') {
@@ -44,7 +42,10 @@ export default function Login({userUnlocked, setUserUnlocked}) {
         setTimeout(()=>{
             setLockExists(false)
             setUserUnlocked('unlocked')
-        }, 3000)
+        }, 3000) // set the unlocked Class once the animation has finished.. though in home.css it's actually only 2 seconds 
+        // setTimeout(()=>{
+        //     setUserUnlocked('unlocked')
+        // }, 5000)
     }
 
     const handleChange = (e) => {
@@ -100,70 +101,48 @@ export default function Login({userUnlocked, setUserUnlocked}) {
     const handleSubmit = async (e) => {
         e.preventDefault();
         // LOG IN
-        if (e.target.id == 'login-form') {
-            login() // false because not using Google
-            
-            // const url = 'http://127.0.0.1:5000/api/login';
-            // const options = {
-            //     method: "POST",
-            //     headers: {
-            //         Authorization: `Basic ${window.btoa(loginEmailText+":"+loginPasswordText)}`
-            //     }
-            // };
-
-            // const res = await fetch(url, options);
-            // const data = await res.json();
-            // console.log(data)
-            // if (data.status === 'ok') {
-            //     const myUserInfo = data.data // the stuff under the 'data' key in the info
-            //     console.log('logged in!')
-            //     console.log(myUserInfo)
-
-            //     logMeIn(myUserInfo);
-            //     //this.setState({redirect:true})
-            //     animateDisappearance();
-            // } else {
-            //     // throw an error message
-            //     alert('That username/password combo was incorrect. Please try again.')
-            // }
-        // SIGN UP
-        } else {
-            if (signupPasswordText === "") {
-                alert('You did not input a password. Your password must have at least 1 character')
+        if (Object.keys(user).length === 0) { // make sure this doesn't get resubmitted 
+            if (e.target.id == 'login-form') {
+                login()   
+            // SIGN UP
             } else {
-                const url = 'http://127.0.0.1:5000/api/signup';
-                const options = {
-                    // mode: 'no-cors',
-                    method: "POST",
-                    headers: {
-                        "Content-Type": 'application/json'
-                    },
-                    body: JSON.stringify({
-                        email: signupEmailText,
-                        password: signupPasswordText,
-                    })
-                };
+                if (signupPasswordText === "") {
+                    alert('You did not input a password. Your password must have at least 1 character')
+                } else {
+                    const url = 'http://127.0.0.1:5000/api/signup';
+                    const options = {
+                        // mode: 'no-cors',
+                        method: "POST",
+                        headers: {
+                            "Content-Type": 'application/json'
+                        },
+                        body: JSON.stringify({
+                            email: signupEmailText,
+                            password: signupPasswordText,
+                        })
+                    };
 
-                if (signupPasswordText !== confirmPasswordText){
-                    alert('Your passwords did not match. For your security, we cannot create your account until you have properly verified your password.')
-                    return
-                }
+                    if (signupPasswordText !== confirmPasswordText){
+                        alert('Your passwords did not match. For your security, we cannot create your account until you have properly verified your password.')
+                        return
+                    }
 
-                const res = await fetch(url, options);
-                const data = await res.json();
-                if (data.status === 'ok'){
-                    // Show success msg
-                    console.log(data)
-                    console.log('successfully created an account')
-                    const myUserInfo = data.data // the stuff under the 'data' key in the info
-                    console.log('logged in!')
-                    console.log(myUserInfo)
-                    console.log("this is the type" + (typeof(myUserInfo)))
+                    const res = await fetch(url, options);
+                    const data = await res.json();
+                    if (data.status === 'ok'){
+                        // Show success msg
+                        console.log(data)
+                        console.log('successfully created an account')
+                        const myUserInfo = data.data // the stuff under the 'data' key in the info
+                        console.log('logged in!')
+                        console.log(myUserInfo)
+                        console.log("this is the type" + (typeof(myUserInfo)))
 
-                    logMeIn(myUserInfo);
+                        logMeIn(myUserInfo);
 
-                    animateDisappearance();
-                    // this.setState({redirect:true})
+                        animateDisappearance();
+                        // this.setState({redirect:true})
+                    }
                 }
             }
         }
@@ -186,53 +165,56 @@ export default function Login({userUnlocked, setUserUnlocked}) {
 
     // for GoogleAuth login
     const createGoogleLoginPopup = async () => {
-        const provider = new GoogleAuthProvider();
-        const auth = getAuth();
-        const result = await signInWithPopup(auth, provider);
-        const user = result.user;
-        //const token = credential.accessToken; //maybe
-        if (user) {
-            console.log(user)
-            const userInfo = {
-                apitoken: user.accessToken,
-                bio: null,
-                date_created: user.metadata.creationTime,
-                email: user.email,
-                first_name: null,
-                id: user.uid,
-                last_name: null,
-                profile_pic: user.photoURL,
-            }
-            console.log(JSON.parse(JSON.stringify(userInfo)))
-            const userData = JSON.parse(JSON.stringify(userInfo))
-            // make the API request 
-            const url = 'http://127.0.0.1:5000/api/google-auth';
-            const options = {
-                // mode: 'no-cors',
-                method: "POST",
-                headers: {
-                    "Content-Type": 'application/json'
-                },
-                body: JSON.stringify({
-                    email: userData.email,
-                    google_id: userData.id,
-                    profile_pic: userData.profile_pic,
-                    apitoken: userData.apitoken,
-                })
-            };
+        // make sure that the user doesn't click this after they log in 
+        if (Object.keys(user).length === 0) { 
+            const provider = new GoogleAuthProvider();
+            const auth = getAuth();
+            const result = await signInWithPopup(auth, provider);
+            const user = result.user;
+            //const token = credential.accessToken; //maybe
+            if (user) {
+                console.log(user)
+                const userInfo = {
+                    apitoken: user.accessToken,
+                    bio: null,
+                    date_created: user.metadata.creationTime,
+                    email: user.email,
+                    first_name: null,
+                    id: user.uid,
+                    last_name: null,
+                    profile_pic: user.photoURL,
+                }
+                console.log(JSON.parse(JSON.stringify(userInfo)))
+                const userData = JSON.parse(JSON.stringify(userInfo))
+                // make the API request 
+                const url = 'http://127.0.0.1:5000/api/google-auth';
+                const options = {
+                    // mode: 'no-cors',
+                    method: "POST",
+                    headers: {
+                        "Content-Type": 'application/json'
+                    },
+                    body: JSON.stringify({
+                        email: userData.email,
+                        google_id: userData.id,
+                        profile_pic: userData.profile_pic,
+                        apitoken: userData.apitoken,
+                    })
+                };
 
-            const res = await fetch(url, options);
-            const data = await res.json();
-            if (data.status === 'ok'){
-                // Show success msg
-                console.log(data)
-                console.log('success')
-                const myUserInfo = data.data // the stuff under the 'data' key in the info
-                console.log(myUserInfo)
+                const res = await fetch(url, options);
+                const data = await res.json();
+                if (data.status === 'ok'){
+                    // Show success msg
+                    console.log(data)
+                    console.log('success')
+                    const myUserInfo = data.data // the stuff under the 'data' key in the info
+                    console.log(myUserInfo)
 
-                logMeIn(myUserInfo);
+                    logMeIn(myUserInfo);
 
-                animateDisappearance();
+                    animateDisappearance();
+                }
             }
         }
     }
@@ -305,7 +287,7 @@ export default function Login({userUnlocked, setUserUnlocked}) {
                                 <input type="submit" value="LOG IN"/>
                             </div>
                             <div className="input">
-                                <GoogleButton onClick={createGoogleLoginPopup}/>
+                                <GoogleButton className="google-button" onClick={createGoogleLoginPopup}/>
                             </div>
                         </form>
                     </div>

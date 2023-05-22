@@ -6,6 +6,10 @@ import UserContextProvider from './context/UserContext';
 
 import { initializeApp } from "firebase/app";
 
+import ThemeProvider from './context/ThemeContext';
+import NavContextProvider from './context/NavContext';
+
+
 const firebaseConfig = {
   apiKey: process.env.REACT_APP_GOOGLE_MAPS_API_KEY,
   authDomain: "gnb-finder.firebaseapp.com",
@@ -23,9 +27,16 @@ root.render(
   //<React.StrictMode>
 
     <BrowserRouter>
-      <UserContextProvider>
-        <App />
-      </UserContextProvider>
+      <ThemeProvider>
+        <UserContextProvider>
+          <NavContextProvider>
+          <App />
+          </NavContextProvider>
+        </UserContextProvider>
+      </ThemeProvider>
     </BrowserRouter>
+    
+
+    
   //</React.StrictMode>
 );

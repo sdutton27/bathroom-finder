@@ -148,6 +148,11 @@ html, body, #root {
     transition: all 0.2s;
   }
   
+  .google-button {
+    border-radius: 4px !important;
+    width: 100% !important;
+  }
+
   input[type=radio] {
     display: none;
   }

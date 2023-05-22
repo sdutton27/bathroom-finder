@@ -2,8 +2,12 @@ import React, { useState, useContext } from 'react'
 import { Routes, Route, useNavigate } from 'react-router-dom';
 
 import Navbar from './components/Navbar/Navbar'
-import MapPage from './views/MapPage'
+import MapPage from './views/MapPage/MapPage'
 import Home from './views/Home/Home'
+import About from './views/About/About'
+import FavoritesPage from './views/FavoritesPage/FavoritesPage'
+import ProfilePage from './views/ProfilePage/ProfilePage'
+import ThemeSwitch from './components/ThemeSwitch';
 
 import { UserContext } from './context/UserContext';
 
@@ -38,6 +42,7 @@ export default function App() {
   //   localStorage.removeItem('user_bathroom_finder')
   //   navigate('/')
   // }
+  const {showHomepage} = useContext(UserContext)
 
   return (
     <div className="app">
@@ -47,8 +52,11 @@ export default function App() {
              <Route path="/about" element={<About />}/>
              <Route path="/map" element={<MapPage />}/>
              <Route path="/favorites" element={<FavoritesPage />}/>
-             <Route path="/profile" element={<Profile />}/>
+             <Route path="/profile" element={<ProfilePage />}/>
          </Routes>
+         {showHomepage === 'visible-home-page' ? 
+         <ThemeSwitch className="theme-switch" style={{position: 'absolute', marginLeft: '30px', right:'0', bottom:'0'}}/>
+         : <></>}
       </div>
   )
 }

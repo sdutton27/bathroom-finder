@@ -55,6 +55,7 @@ nav a {
 nav .animation {
 	position: absolute;
 	height: 100%;
+    /* height: 100px; */
 	top: 0;
 	/* z-index: 0; */
     z-index: 0;
@@ -63,6 +64,7 @@ nav .animation {
 	/* border-radius: 8px; */
     background-image: url("bus.png");
     background-size: 100% 100%;
+    /* background-size: contain; */
 }
 
 a:nth-child(1) {
@@ -147,8 +149,8 @@ nav .nav-profile, a:nth-child(5):hover~.animation {
     position: absolute;
     height: 100%;
     width: 100%;
-    background: rgb(238,174,202);
-background: radial-gradient(circle, rgba(238,174,202,1) 0%, rgba(148,187,233,1) 100%);
+    /* background: rgb(238,174,202); */
+    background: radial-gradient(circle, rgba(238,174,202,1) 0%, rgba(148,187,233,1) 100%);
 }
 
 

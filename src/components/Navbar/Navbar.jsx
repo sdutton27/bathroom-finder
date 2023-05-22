@@ -1,31 +1,70 @@
-import React, { Component, useContext } from 'react';
+import React, { Component, useState, useEffect, useContext } from 'react';
 import { Link } from 'react-router-dom';
 
 import { UserContext } from '../../context/UserContext';
 
+// import {useContext} from 'react'
+import { ThemeContext } from '../../context/ThemeContext';
+import { NavContext } from '../../context/NavContext';
+
 import './navbar.css'
+
+import busDark from './bus-dark.png'
+import busLight from './bus.png'
 
 export default function Navbar() {
     //const {user, setUser} = useContext(UserContext)
     const {user, setUser, logMeOut} = useContext(UserContext)
+    const {currentPage} = useContext(NavContext);
     // console.log(user)
+    const {currentTheme} = useContext(ThemeContext)
+
+    const [whichBus, setWhichBus] = useState(busLight)
+    const [whichBackground, setWhichBackground] = useState('radial-gradient(circle, rgba(238,174,202,1) 0%, rgba(148,187,233,1) 100%)')
+
+    // const whichBus = () => {
+    //   console.log(currentTheme)
+    //   console.log('whichbus')
+    //   if (currentTheme === 'primaryTheme') {
+    //     return busDark
+    //   } else {
+    //     return busLight
+    //   }
+    // }
+     useEffect(()=>{
+      console.log('useeffect')
+      if (currentTheme === 'primaryTheme') {
+        //setWhichBus(busDark)
+        setWhichBus(busLight)
+      } else {
+        setWhichBus(busDark)
+      }
+      console.log(whichBackground)
+      if (currentTheme === 'primaryTheme') {
+        setWhichBackground("radial-gradient(circle, rgba(238,174,202,1) 0%, rgba(148,187,233,1) 100%)")
+      } else {
+        setWhichBackground('linear-gradient(354deg, rgba(2,0,36,1) 8%, rgba(17,17,62,1) 43%, rgba(4,55,85,1) 100%, rgba(10,77,91,1) 100%)')
+      }
+        
+     },[currentTheme])
   return (
     <div className='nav-container'>
-      <div className='nav-background'/>
+      <div className='nav-background' style={{background: whichBackground}}/>
       <nav className="navbar">
-        <a href="#">Home</a>
-        <a href="#">About</a>
-        <a href="#"><b>Map</b></a>
-        <a href="#">Favorites</a>
-        <a href="#">Profile</a>
-        <div className="animation nav-home"></div>
+        <Link to="/">Home</Link>
+        {/* <a href="#">About</a> */}
+        <Link to="about" underline="none">About</Link>
+        <Link to="map" underline="none">Map</Link>
+        <Link to="favorites" underline="none">Favorites</Link>
+        <Link to="profile">Profile</Link>
+        <div className={`animation nav-${currentPage}`} style={{backgroundImage:`url(${whichBus})`}}></div>
       </nav>
       <div id="scroll-container">
         <img id="clouds-1" src={ require('./clouds.png') }/>
         <img id="clouds-2" src={ require('./clouds.png') }/>
         <img id="tree-1" src={ require('./tree.png') }/>
         <img id="tree-3" src={ require('./tree_3.png') }/>
-        <img id="wc" src={ require('./public-toilet.png') }/>
+        <img id="wc" src={ require('./toilet.png') }/>
       </div>
     </div>
 
