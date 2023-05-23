@@ -13,7 +13,8 @@ import locationIcon from '@iconify/icons-mdi/map-marker'
 
 const Map = ({location, zoomLevel}) => {
   const {currentTheme} = useContext(ThemeContext)
-  console.log({location})
+  // console.log({location})
+  // console.log(zoomLevel)
   return (
     <div className="map">
       {/* <h2 className="map-h2">Come visit us at our campus</h2> */}
@@ -27,7 +28,7 @@ const Map = ({location, zoomLevel}) => {
                         options={{disableDefaultUI: true, zoomControl:true, styles: (currentTheme === "primaryTheme" ? mapStylesLight: mapStylesDark)}}
         >
 
-          {/* <LocationPin lat={location.lat} lng={location.lng} text={location.address}/> */}
+          <LocationPin lat={location.lat} lng={location.lng} text={location.address}/>
         </GoogleMapReact>
       </div>
 
@@ -39,7 +40,7 @@ export default Map;
 
 const LocationPin = ({ text }) => (
   <div className="pin">
-    <Icon icon={locationIcon} className="pin-icon" />
-    <p className="pin-text">{text}</p>
+    <Icon icon={locationIcon} className="pin-icon" style={{width: "50px", height: "50px", position: "relative", top: "-50px", left: "-25px"}}/>
+    {/* <p className="pin-text">{text}</p> */}
   </div>
 )

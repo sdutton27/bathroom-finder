@@ -1,16 +1,19 @@
 import * as React from 'react';
 import FormControl from '@mui/base/FormControl';
 import Input, { inputClasses } from '@mui/base/Input';
+import { TextField } from '@mui/material';
 import { styled } from '@mui/system';
+import { InputLabel } from '@mui/material';
 
 let inputtedWidth = ""; // so we can access this variable in the style 
-export default function SearchBar({width}) {
+export default function SearchBar({width, placeholder, value, onChange}) {
     inputtedWidth = width;
   return (
-    <FormControl defaultValue="" required>
+    <FormControl value={value} required>
       {({ filled, focused }) => (
         <React.Fragment>
-          <StyledInput className={filled ? 'filled' : ''} />
+          {/* <InputLabel>Text</InputLabel> */}
+          <StyledInput placeholder = {placeholder} onChange={onChange} className={filled ? 'filled' : ''} />
         </React.Fragment>
       )}
     </FormControl>

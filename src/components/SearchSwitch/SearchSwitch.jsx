@@ -65,19 +65,25 @@ const MaterialUISwitch = styled(Switch)(({ theme }) => ({
     },
   }));
 
-const SearchSwitch = () => {
-
+  export default function SearchSwitch ({switchChecked, setSwitchChecked}) {
+    
     const handleChange = (e) => {
-        
+      const checked = e.target.checked;
+      if (checked){
+        setSwitchChecked(true);
+      } else {
+        setSwitchChecked(false);
+      }
     }
 
     return (
         <FormControlLabel
                                                     // if they check it then they want dark mode 
-            control={<MaterialUISwitch sx={{ m:1 }} checked={false} onChange={(e)=>{handleChange(e)}}/>}
+            control={<MaterialUISwitch checked={switchChecked} onChange={(e)=>{handleChange(e)}}/>}
+            sx={{margin:"0px"}}
             label=""
         />
     )
 }
 
-  export default SearchSwitch;
+// export default SearchSwitch;
