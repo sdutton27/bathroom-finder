@@ -16,6 +16,7 @@ import Typography from '@mui/material/Typography';
 import Grid from '@mui/material/Grid';
 import SearchSwitch from '../../components/SearchSwitch/SearchSwitch';
 import { TextField } from '@mui/material';
+import SearchCard from '../../components/SearchCard/SearchCard'
 
 export default function MapPage() {
   const [coordinates, setCoordinates] = useState({ lat: 40.71427, lng: -74.00597})
@@ -24,8 +25,14 @@ export default function MapPage() {
 
   const [autocomplete, setAutocomplete] = useState(null);
   const [locationSearchVal, setLocationSearchVal] = useState("");
+  //const [placeID, setPlaceID] = useState(""); we could have this if we wanted to search via place_id instead of the title but the title works just fine 
+  const [currentLoc, setCurrentLoc] = useState("");
   const [searchLocPhoto, setSearchLocPhoto] = useState('')
   const [searchLocBase64, setSearchLocBase64] = useState('')
+  const [centerCoords, setCenterCoords] = useState({ lat: 40.71427, lng: -74.00597})
+  const [bounds, setBounds] = useState('') // these will automatically be set for us pretty immediately? 
+
+  const [bathrooms, setBathrooms] = useState([])
 
   const handleSearchChange = (e) => {
     setLocationSearchVal(e.target.value)
@@ -36,8 +43,10 @@ export default function MapPage() {
   const onPlaceChanged = () => {
     // console.log(autocomplete.gm_bindings_.bounds."502".Rj.formattedPrediction);
     console.log(autocomplete)
-    console.log(autocomplete['gm_accessors_']['place']['Is']['Rj']['gm_accessors_']['place']['Rj']['formattedPrediction'])
-    setLocationSearchVal(autocomplete['gm_accessors_']['place']['Is']['Rj']['gm_accessors_']['place']['Rj']['formattedPrediction'])  
+    //console.log(autocomplete['gm_accessors_']['place']['Is']['Rj']['gm_accessors_']['place']['Rj']['formattedPrediction'])
+    //setLocationSearchVal(autocomplete['gm_accessors_']['place']['Is']['Rj']['gm_accessors_']['place']['Rj']['formattedPrediction']) 
+    setLocationSearchVal(autocomplete['gm_accessors_']['place']['Rj']['formattedPrediction'])  
+    console.log(autocomplete['gm_accessors_']['place']['Rj']['place']['place_id'])
 
   }
 
@@ -48,17 +57,20 @@ export default function MapPage() {
       // on google maps documentation
       const lat = autocomplete.getPlace().geometry.location.lat();
       const lng = autocomplete.getPlace().geometry.location.lng();
+
       // let's set the coordinates
       setCoordinates({lat, lng});
+      setCenterCoords({lat, lng});
       getGooglePlacesInfo(locationSearchVal);
+      setCurrentLoc(locationSearchVal); // the text for the photo
       setLocationSearchVal(""); // reset the search
-      searchBathroomsAroundLoc(lat, lng);
+      //searchBathroomsAroundLoc(lat, lng); // deleting this because it will already be called since the bounds will change 
     }
     
   }
 
-  const searchBathroomsAroundLoc = async (lat, lng)=> {
-    const url = `http://127.0.0.1:5000/api/search-around-loc/${lat.toString()}/${lng.toString()}`;
+  const searchBathroomsAroundLoc = async (lat, lng, north, east, south, west)=> {
+    const url = `http://127.0.0.1:5000/api/search-around-loc/${lat.toString()}/${lng.toString()}/${north.toString()}/${east.toString()}/${south.toString()}/${west.toString()}`;
     const options = {
         // mode: 'no-cors',
         method: "GET",
@@ -73,6 +85,7 @@ export default function MapPage() {
         console.log(data)
         console.log('success')
     }
+    setBathrooms(data.results)
   }
 
   const getGooglePlacesInfo = async (locationSearchVal) => {
@@ -128,12 +141,35 @@ export default function MapPage() {
   },[searchLocPhoto])
 
   useEffect(()=>{
+    if (bounds != "") {
+      //searchBathroomsAroundLoc(coordinates.lat, coordinates.lng);
+      searchBathroomsAroundLoc(centerCoords.lat, centerCoords.lng, bounds.ne.lat, bounds.ne.lng, bounds.sw.lat, bounds.sw.lng); // around center so that the search changes depending on what's on the screen 
+      console.log("bounds: north: " + bounds['ne']['lat'] + " east: " + bounds.ne.lng + " south: " + bounds['sw']['lat'] + " west: " + bounds.sw.lng)
+    }
+    },[bounds])
+
+  useEffect(()=>{
     setCurrentPage('map');
     navigator.geolocation.getCurrentPosition(({ coords: {latitude, longitude}})=>{
       console.log({latitude, longitude})
       setCoordinates({ lat: latitude, lng: longitude })
+      setCenterCoords({ lat: latitude, lng: longitude })
   })
+  // searchBathroomsAroundLoc(coordinates.lat, coordinates.lng);
+  // console.log("bounds: " + bounds)
+  // let's try getting the place info based on those coords 
+  //const geocoder = new google.maps.Geocoder();
+
   },[])
+
+  // if we would rather reverse geocode things 
+  // const geocodeLatLng = async () => {
+  //   const {Geocoder}  = await google.maps.importLibrary("geocoding")
+  //   const response = await Geocoder.geocode({location: coordinates})
+  //   console.log('geocoding')
+  //   console.log(response.results[0])
+  //   console.log(response.results[0].formatted_address)
+  // }
 
     // const location = {
     //     //address: '1600 Amphitheatre Parkway, Mountain View, california.',
@@ -209,8 +245,18 @@ export default function MapPage() {
           {/* <Grid item>
             <Typography>hi</Typography>
             </Grid> */}
-            <Grid item xs={12} sx={{height: '100%'}}>
-            <Map location={coordinates} zoomLevel={13}/>
+            <Grid item xs={12} sx={{height: '100%', position:"relative"}}>
+              {/* <Map location={coordinates} zoomLevel={15} setBounds ={setBounds} setCenterCoords={setCenterCoords} centerCoords={centerCoords}/>
+              { searchLocBase64 !== "" ? 
+              <SearchCard image_src={`data:image/jpeg;base64,${searchLocBase64}`} loc_name={currentLoc}/>
+              // <img src={`data:image/jpeg;base64,${searchLocBase64}`} style={{opacity: '.7'}} />
+              : <></>} */}
+              { searchLocBase64 !== "" ? 
+              <Map searchCard={<SearchCard image_src={`data:image/jpeg;base64,${searchLocBase64}`} loc_name={currentLoc}/>} bounds={bounds} location={coordinates} zoomLevel={15} setBounds ={setBounds} setCenterCoords={setCenterCoords} centerCoords={centerCoords}/>
+              :
+              <Map location={coordinates} zoomLevel={15} bounds={bounds} setBounds ={setBounds} setCenterCoords={setCenterCoords} centerCoords={centerCoords}/>
+              }
+            
             </Grid>
           </Grid>
         </Grid>
@@ -220,13 +266,17 @@ export default function MapPage() {
             </Grid> 
             <Grid item>
               <Typography align="center" sx={{color:'text.primary'}}>Search Results Here</Typography>
+              {bathrooms?.map((bathroom, i)=>(
+                <Typography key={i}>{bathroom.name}</Typography>
+              ))}
             </Grid> 
           </Grid>
       </Grid>
       <Typography align="center" sx={{color:'text.primary'}}>This will be the Recent History/Favorites</Typography>
-        { searchLocBase64 !== "" ? 
-        <img src={`data:image/jpeg;base64,${searchLocBase64}`} style={{opacity: '.7'}} />
-        : <></>}
+        {/* { searchLocBase64 !== "" ? 
+        <SearchCard image_src={`data:image/jpeg;base64,${searchLocBase64}`} loc_name={currentLoc}/>
+        // <img src={`data:image/jpeg;base64,${searchLocBase64}`} style={{opacity: '.7'}} />
+        : <></>} */}
     </Box>
   )
 }
