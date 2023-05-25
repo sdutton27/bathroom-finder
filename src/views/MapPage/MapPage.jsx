@@ -17,6 +17,7 @@ import Grid from '@mui/material/Grid';
 import SearchSwitch from '../../components/SearchSwitch/SearchSwitch';
 import { TextField } from '@mui/material';
 import SearchCard from '../../components/SearchCard/SearchCard'
+import BathroomCard from '../../components/BathroomCard/BathroomCard'
 
 export default function MapPage() {
   const [coordinates, setCoordinates] = useState({ lat: 40.71427, lng: -74.00597})
@@ -252,9 +253,9 @@ export default function MapPage() {
               // <img src={`data:image/jpeg;base64,${searchLocBase64}`} style={{opacity: '.7'}} />
               : <></>} */}
               { searchLocBase64 !== "" ? 
-              <Map searchCard={<SearchCard image_src={`data:image/jpeg;base64,${searchLocBase64}`} loc_name={currentLoc}/>} bounds={bounds} location={coordinates} zoomLevel={15} setBounds ={setBounds} setCenterCoords={setCenterCoords} centerCoords={centerCoords}/>
+              <Map bathrooms={bathrooms} searchCard={<SearchCard image_src={`data:image/jpeg;base64,${searchLocBase64}`} loc_name={currentLoc}/>} bounds={bounds} location={coordinates} zoomLevel={15} setBounds ={setBounds} setCenterCoords={setCenterCoords} centerCoords={centerCoords}/>
               :
-              <Map location={coordinates} zoomLevel={15} bounds={bounds} setBounds ={setBounds} setCenterCoords={setCenterCoords} centerCoords={centerCoords}/>
+              <Map bathrooms={bathrooms} location={coordinates} zoomLevel={15} bounds={bounds} setBounds ={setBounds} setCenterCoords={setCenterCoords} centerCoords={centerCoords}/>
               }
             
             </Grid>
@@ -264,10 +265,21 @@ export default function MapPage() {
             <Grid item >
               <Typography align="center" sx={{color:'text.primary'}}>Bathrooms Nearby</Typography>
             </Grid> 
-            <Grid item>
-              <Typography align="center" sx={{color:'text.primary'}}>Search Results Here</Typography>
+            <Grid item sx={{height: '66vh', overflow:'scroll'}}>
+              {/* <Typography align="center" sx={{color:'text.primary'}}>Search Results Here</Typography> */}
               {bathrooms?.map((bathroom, i)=>(
-                <Typography key={i}>{bathroom.name}</Typography>
+                // <Typography key={i}>{bathroom.name}</Typography>
+            
+                <BathroomCard cardWidth='186' id={bathroom.id} key={i} index={i} 
+                name={bathroom.name} street={bathroom.street} 
+                city={bathroom.city}
+                state={bathroom.state} country={bathroom.country} 
+                directions={bathroom.directions} comment={bathroom.comment} 
+                rating={(bathroom.upvote /(bathroom.upvote + bathroom.downvote)) * 5} 
+                accessible={bathroom.accessible} 
+                changingTable={bathroom.changing_table} unisex={bathroom.unisex}
+                />
+                
               ))}
             </Grid> 
           </Grid>
@@ -277,6 +289,7 @@ export default function MapPage() {
         <SearchCard image_src={`data:image/jpeg;base64,${searchLocBase64}`} loc_name={currentLoc}/>
         // <img src={`data:image/jpeg;base64,${searchLocBase64}`} style={{opacity: '.7'}} />
         : <></>} */}
+        {/* <BathroomCard cardWidth='186' id='7447' /> */}
     </Box>
   )
 }
