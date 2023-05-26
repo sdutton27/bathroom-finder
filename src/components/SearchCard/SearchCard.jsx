@@ -13,7 +13,8 @@ export default function SearchCard({image_src, loc_name}) {
     //const {currentTheme} = useContext(ThemeContext)
     const theme = useTheme()
   return (
-    <Card sx={{ minWidth: 70, maxHeight: 120, maxWidth: 120, position: "absolute", zIndex:"tooltip", lat:"48.84937095098954", lng:"2.3436817464965713",opacity: .85,}}>
+    <Card sx={{ minWidth: 70, maxHeight: 120, maxWidth: 120, position: "absolute", bottom:3, left:3, zIndex:"tooltip", opacity: .85,}}>
+    {/* <Card sx={{ minWidth: 70, maxHeight: 120, maxWidth: 120, position: "absolute", zIndex:"tooltip", lat:"48.84937095098954", lng:"2.3436817464965713",opacity: .85,}}> */}
       <CardActionArea>
         <CardMedia
           component="img"

@@ -9,57 +9,59 @@ import mapStylesLight from './mapStylesLight'
 
 import BathroomPin from '../BathroomPin/BathroomPin'
 
+import { Typography } from '@mui/material'
+
 // for LocationPin
 import { Icon } from '@iconify/react'
 import locationIcon from '@iconify/icons-mdi/map-marker'
 
-const Map = ({bathrooms, location, zoomLevel, bounds, setBounds, setCenterCoords, centerCoords, searchCard}) => {
+const Map = ({bathrooms, location, zoomLevel, bounds, setBounds, setCenterCoords, centerCoords}) => {
   const {currentTheme} = useContext(ThemeContext)
   // console.log({location})
   // console.log(zoomLevel)
-  const [photoLat, setPhotoLat] = useState(0.0)
-  const [photoLng, setPhotoLng] = useState(0.0)
+  // const [photoLat, setPhotoLat] = useState(0.0)
+  // const [photoLng, setPhotoLng] = useState(0.0)
 
-  const getPhotoLat = () => {
-    if (bounds != '') {
-      const north = bounds.ne.lat 
-    const south = bounds.sw.lat
-    const diff = north - south
-    setPhotoLat(south + (diff / 4.5))
-    console.log(photoLat)
-    }
-    // const north = bounds.ne.lat 
-    // const south = bounds.sw.lat
-    // const diff = north - south
-    // setPhotoLat(south + (diff / 5))
-    // console.log(photoLat)
-  }
+  // const getPhotoLat = () => {
+  //   if (bounds != '') {
+  //     const north = bounds.ne.lat 
+  //   const south = bounds.sw.lat
+  //   const diff = north - south
+  //   setPhotoLat(south + (diff / 4.5))
+  //   console.log(photoLat)
+  //   }
+  //   // const north = bounds.ne.lat 
+  //   // const south = bounds.sw.lat
+  //   // const diff = north - south
+  //   // setPhotoLat(south + (diff / 5))
+  //   // console.log(photoLat)
+  // }
 
-  const getPhotoLng = () => {
-    // const east = bounds.ne.lng 
-    // const west = bounds.sw.lng
-    // const diff = east - west
-    // setPhotoLng(west + diff / 5)
-    if (bounds != '') {
-      // setPhotoLng(bounds.sw.lng)
-      const east = bounds.ne.lng 
-    const west = bounds.sw.lng
-    const diff = east - west
-    setPhotoLng(west + (diff /50))
-    }
-    // setPhotoLng(bounds.sw.lng)
-  }
+  // const getPhotoLng = () => {
+  //   // const east = bounds.ne.lng 
+  //   // const west = bounds.sw.lng
+  //   // const diff = east - west
+  //   // setPhotoLng(west + diff / 5)
+  //   if (bounds != '') {
+  //     // setPhotoLng(bounds.sw.lng)
+  //     const east = bounds.ne.lng 
+  //   const west = bounds.sw.lng
+  //   const diff = east - west
+  //   setPhotoLng(west + (diff /50))
+  //   }
+  //   // setPhotoLng(bounds.sw.lng)
+  // }
 
-  useEffect(()=>{
-    getPhotoLat()
-    getPhotoLng()
-  },[bounds])
+  // useEffect(()=>{
+  //   getPhotoLat()
+  //   getPhotoLng()
+  // },[bounds])
 
   return (
     <div className="map">
       {/* <h2 className="map-h2">Come visit us at our campus</h2> */}
 
-      <div className="google-map">
+      <div className="google-map" style={{position: "absolute", zIndex:0, top:0, left:0}}>
                                               {/* API KEY - move this */}
         <GoogleMapReact bootstrapURLKeys={{key: process.env.REACT_APP_GOOGLE_MAPS_API_KEY}} 
                         defaultCenter={location} 
@@ -71,22 +73,17 @@ const Map = ({bathrooms, location, zoomLevel, bounds, setBounds, setCenterCoords
                           //console.log(e)
                           setCenterCoords({ lat: e.center.lat, lng: e.center.lng })
                           setBounds({ne: e.marginBounds.ne, sw: e.marginBounds.sw })
-                          getPhotoLat()
-                          getPhotoLng()
+                          // getPhotoLat()
+                          // getPhotoLng()
                       }}
         >
+          {/* <Typography sx={{zIndex:100}}>hi</Typography> */}
+          {/* {bathrooms?.map((bathroom, i)=><BathroomPin key={i} lat={bathroom.latitude} lng={bathroom.longitude} index={i}/>)} */}
           {bathrooms?.map((bathroom, i)=>(
-            <div 
-            lat={bathroom.latitude}
-            lng={bathroom.longitude}
-            key={i}
-            style={{position:"relative"}}
-            >
-              {/* <img src={require("./pin.png")} style={{height:"40px"}}/> */}
-              <BathroomPin index={i}/>
-            </div>
+            // <BathroomPin key={i} lat={bathroom.latitude} lng={bathroom.longitude} index={i}/>
+            <BathroomPin key={i} position={{lat:bathroom.latitude, lng:bathroom.longitude}} index={i}/>
           ))}
-          {<div lat={photoLat} lng={photoLng}>{searchCard}</div>}
+          {/* {<div lat={photoLat} lng={photoLng}>{searchCard}</div>} */}
           <LocationPin lat={location.lat} lng={location.lng} text={location.address}/>
         </GoogleMapReact>
       </div>

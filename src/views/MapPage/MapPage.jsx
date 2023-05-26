@@ -71,6 +71,7 @@ export default function MapPage() {
   }
 
   const searchBathroomsAroundLoc = async (lat, lng, north, east, south, west)=> {
+    console.log({lat, lng})
     const url = `http://127.0.0.1:5000/api/search-around-loc/${lat.toString()}/${lng.toString()}/${north.toString()}/${east.toString()}/${south.toString()}/${west.toString()}`;
     const options = {
         // mode: 'no-cors',
@@ -246,17 +247,17 @@ export default function MapPage() {
           {/* <Grid item>
             <Typography>hi</Typography>
             </Grid> */}
-            <Grid item xs={12} sx={{height: '100%', position:"relative"}}>
-              {/* <Map location={coordinates} zoomLevel={15} setBounds ={setBounds} setCenterCoords={setCenterCoords} centerCoords={centerCoords}/>
+            <Grid item xs={12} sx={{height: '66vh', position:"relative"}}>
+              <Map location={coordinates} zoomLevel={15} bounds={bounds} setBounds ={setBounds} setCenterCoords={setCenterCoords} centerCoords={centerCoords}/>
               { searchLocBase64 !== "" ? 
               <SearchCard image_src={`data:image/jpeg;base64,${searchLocBase64}`} loc_name={currentLoc}/>
               // <img src={`data:image/jpeg;base64,${searchLocBase64}`} style={{opacity: '.7'}} />
-              : <></>} */}
-              { searchLocBase64 !== "" ? 
+              : <></>}
+              {/* { searchLocBase64 !== "" ? 
               <Map bathrooms={bathrooms} searchCard={<SearchCard image_src={`data:image/jpeg;base64,${searchLocBase64}`} loc_name={currentLoc}/>} bounds={bounds} location={coordinates} zoomLevel={15} setBounds ={setBounds} setCenterCoords={setCenterCoords} centerCoords={centerCoords}/>
               :
               <Map bathrooms={bathrooms} location={coordinates} zoomLevel={15} bounds={bounds} setBounds ={setBounds} setCenterCoords={setCenterCoords} centerCoords={centerCoords}/>
-              }
+              } */}
             
             </Grid>
           </Grid>
