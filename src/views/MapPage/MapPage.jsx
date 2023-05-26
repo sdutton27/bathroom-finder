@@ -18,6 +18,7 @@ import SearchSwitch from '../../components/SearchSwitch/SearchSwitch';
 import { TextField } from '@mui/material';
 import SearchCard from '../../components/SearchCard/SearchCard'
 import BathroomCard from '../../components/BathroomCard/BathroomCard'
+import BathroomList from '../../components/BathroomList/BathroomList'
 
 export default function MapPage() {
   const [coordinates, setCoordinates] = useState({ lat: 40.71427, lng: -74.00597})
@@ -34,6 +35,8 @@ export default function MapPage() {
   const [bounds, setBounds] = useState('') // these will automatically be set for us pretty immediately? 
 
   const [bathrooms, setBathrooms] = useState([])
+
+  const [childClicked, setChildClicked] = useState(null)
 
   const handleSearchChange = (e) => {
     setLocationSearchVal(e.target.value)
@@ -248,7 +251,7 @@ export default function MapPage() {
             <Typography>hi</Typography>
             </Grid> */}
             <Grid item xs={12} sx={{height: '66vh', position:"relative"}}>
-              <Map location={coordinates} zoomLevel={15} bounds={bounds} setBounds ={setBounds} setCenterCoords={setCenterCoords} centerCoords={centerCoords}/>
+              <Map childClicked={childClicked} setChildClicked={setChildClicked} bathrooms={bathrooms} location={coordinates} zoomLevel={15} bounds={bounds} setBounds ={setBounds} setCenterCoords={setCenterCoords} centerCoords={centerCoords}/>
               { searchLocBase64 !== "" ? 
               <SearchCard image_src={`data:image/jpeg;base64,${searchLocBase64}`} loc_name={currentLoc}/>
               // <img src={`data:image/jpeg;base64,${searchLocBase64}`} style={{opacity: '.7'}} />
@@ -266,10 +269,9 @@ export default function MapPage() {
             <Grid item >
               <Typography align="center" sx={{color:'text.primary'}}>Bathrooms Nearby</Typography>
             </Grid> 
-            <Grid item sx={{height: '66vh', overflow:'scroll'}}>
-              {/* <Typography align="center" sx={{color:'text.primary'}}>Search Results Here</Typography> */}
+            <BathroomList childClicked={childClicked} bathrooms={bathrooms}/>
+            {/* <Grid item sx={{height: '66vh', overflow:'scroll'}}>
               {bathrooms?.map((bathroom, i)=>(
-                // <Typography key={i}>{bathroom.name}</Typography>
             
                 <BathroomCard cardWidth='186' id={bathroom.id} key={i} index={i} 
                 name={bathroom.name} street={bathroom.street} 
@@ -282,7 +284,7 @@ export default function MapPage() {
                 />
                 
               ))}
-            </Grid> 
+            </Grid>  */}
           </Grid>
       </Grid>
       <Typography align="center" sx={{color:'text.primary'}}>This will be the Recent History/Favorites</Typography>

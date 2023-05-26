@@ -13,7 +13,7 @@ export default function SearchCard({image_src, loc_name}) {
     //const {currentTheme} = useContext(ThemeContext)
     const theme = useTheme()
   return (
-    <Card sx={{ minWidth: 70, maxHeight: 120, maxWidth: 120, position: "absolute", bottom:3, left:3, zIndex:"tooltip", opacity: .85,}}>
+    <Card sx={{ minWidth: 70, maxHeight: 120, maxWidth: 120, position: "absolute", bottom:24, left:10, zIndex:"tooltip", opacity: .85,}}>
     {/* <Card sx={{ minWidth: 70, maxHeight: 120, maxWidth: 120, position: "absolute", zIndex:"tooltip", lat:"48.84937095098954", lng:"2.3436817464965713",opacity: .85,}}> */}
       <CardActionArea>
         <CardMedia
@@ -23,7 +23,7 @@ export default function SearchCard({image_src, loc_name}) {
           alt="image of location"
         />
         <CardContent sx={{padding:0}}>
-          <Typography gutterBottom sx={{fontSize:'8px', color:'text.primary', padding: '1px', textAlign:'center'}}>
+          <Typography gutterBottom sx={{fontSize:'8px', color:'text.primary', padding: '1px 3px', textAlign:'center'}}>
           {loc_name}
           </Typography>
         </CardContent>

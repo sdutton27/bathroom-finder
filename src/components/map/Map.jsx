@@ -15,7 +15,7 @@ import { Typography } from '@mui/material'
 import { Icon } from '@iconify/react'
 import locationIcon from '@iconify/icons-mdi/map-marker'
 
-const Map = ({bathrooms, location, zoomLevel, bounds, setBounds, setCenterCoords, centerCoords}) => {
+const Map = ({childClicked, setChildClicked, bathrooms, location, zoomLevel, bounds, setBounds, setCenterCoords, centerCoords}) => {
   const {currentTheme} = useContext(ThemeContext)
   // console.log({location})
   // console.log(zoomLevel)
@@ -68,7 +68,8 @@ const Map = ({bathrooms, location, zoomLevel, bounds, setBounds, setCenterCoords
                         center={centerCoords}
                         defaultZoom={zoomLevel}
                         options={{disableDefaultUI: true, zoomControl:true, styles: (currentTheme === "primaryTheme" ? mapStylesLight: mapStylesDark)}}
-                        sx={{position: 'absolute', zIndex:'modal'}}
+                        onChildClick={(child)=>{setChildClicked(child)}}
+                      
                         onChange={(e)=>{
                           //console.log(e)
                           setCenterCoords({ lat: e.center.lat, lng: e.center.lng })
@@ -80,8 +81,8 @@ const Map = ({bathrooms, location, zoomLevel, bounds, setBounds, setCenterCoords
           {/* <Typography sx={{zIndex:100}}>hi</Typography> */}
           {/* {bathrooms?.map((bathroom, i)=><BathroomPin key={i} lat={bathroom.latitude} lng={bathroom.longitude} index={i}/>)} */}
           {bathrooms?.map((bathroom, i)=>(
-            // <BathroomPin key={i} lat={bathroom.latitude} lng={bathroom.longitude} index={i}/>
-            <BathroomPin key={i} position={{lat:bathroom.latitude, lng:bathroom.longitude}} index={i}/>
+            <BathroomPin key={i} selected={Number(childClicked) === i} lat={bathroom.latitude} lng={bathroom.longitude} index={i}/>
+            // <BathroomPin key={i} position={{lat:bathroom.latitude, lng:bathroom.longitude}} index={i}/>
           ))}
           {/* {<div lat={photoLat} lng={photoLng}>{searchCard}</div>} */}
           <LocationPin lat={location.lat} lng={location.lng} text={location.address}/>

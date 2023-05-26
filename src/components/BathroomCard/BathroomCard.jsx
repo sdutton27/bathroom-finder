@@ -18,8 +18,18 @@ import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 
 export default function BathroomCard({ name, index, cardWidth, 
                                 id, street, state, city, country, directions, comment, 
-                                rating, accessible, changingTable, unisex}) {
-  return (
+                                rating, accessible, changingTable, unisex, selected, refProp}) {
+     
+    console.log(selected)
+    // if a place is selected, move into that view 
+    if(selected === true) {
+        console.log({refProp})
+        refProp?.current?.scrollIntoView({ behavior: "smooth", block: "start"}) 
+        console.log('should be scrolling')
+        // setTimeout(function () {refProp?.current?.scrollIntoView({ behavior: "smooth", block: "start"})}, 100)
+    }                               
+  
+    return (
     <Card sx={{marginBottom:"5px", width: `${cardWidth}px`}}>
         <Grid container sx={{width: '100%'}}>
             <Grid item container direction="column" xs={10}>
