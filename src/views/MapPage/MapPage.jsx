@@ -269,7 +269,7 @@ export default function MapPage() {
             <Grid item >
               <Typography align="center" sx={{color:'text.primary'}}>Bathrooms Nearby</Typography>
             </Grid> 
-            <BathroomList childClicked={childClicked} bathrooms={bathrooms}/>
+            <BathroomList currentLoc={currentLoc} childClicked={childClicked} bathrooms={bathrooms}/>
             {/* <Grid item sx={{height: '66vh', overflow:'scroll'}}>
               {bathrooms?.map((bathroom, i)=>(
             

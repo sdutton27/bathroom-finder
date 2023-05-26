@@ -18,7 +18,8 @@ import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 
 export default function BathroomCard({ name, index, cardWidth, 
                                 id, street, state, city, country, directions, comment, 
-                                rating, accessible, changingTable, unisex, selected, refProp}) {
+                                rating, accessible, changingTable, unisex, 
+                                selected, refProp, currentLoc}) {
      
     console.log(selected)
     // if a place is selected, move into that view 
@@ -68,7 +69,7 @@ export default function BathroomCard({ name, index, cardWidth,
             </Grid>
             <Grid container item direction="column" xs={2} spacing={1} sx={{paddingTop: 1, paddingBottom:1}}>
                 <Grid item>
-                    <img src={require("./google-maps.png")} alt="google maps icon" height="22px"/>
+                    <a href={`https://www.google.com/maps/dir/?api=1&origin=${currentLoc.replace(/ /g, '+')}&destination=${name.replace(/ /g, '+') + "+" + street.replace(/ /g, '+') + "+" + city.replace(/ /g, '+') }`} target="_blank"><img src={require("./google-maps.png")} alt="google maps icon" height="22px"/></a>
                 </Grid>
                 <Grid item>
                     <TransgenderIcon color={unisex===true?"":"disabled"}></TransgenderIcon>
