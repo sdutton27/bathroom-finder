@@ -4,7 +4,7 @@ import { Typography } from '@mui/material'
 import { useTheme } from '@emotion/react'
 
 // export default function BathroomPin({index, lat, lng}) {
-export default function BathroomPin({index, lat, lng, selected}) {
+export default function BathroomPin({index, lat, lng, selected,}) {
   // console.log("a pin is selected: " + selected)
   const theme = useTheme()
   return (
@@ -19,7 +19,7 @@ export default function BathroomPin({index, lat, lng, selected}) {
       : 
       <>
       <img src={require("./pin.png")} lat={lat} lng={lng} style={{height:"40px", position:"absolute", left: "-20px", top:"-40px", filter: "drop-shadow(1px 2px 3px #00000044)"}} />
-      <Typography sx={{color:'text.primary', position:"absolute", left: "-5px", top:"-42px", fontWeight:"500", }} >{String.fromCharCode((index + 65))}</Typography>
+      <Typography sx={{color:'text.primary', position:"absolute", left: "-5px", top:"-42px", fontWeight:"500",}} >{String.fromCharCode((index + 65))}</Typography>
       </>
       // <img src={require("./pin.png")} lat={lat} lng={lng} style={{height:"40px", position:"absolute", filter: "drop-shadow(1px 2px 3px #00000044)"}} />
       }

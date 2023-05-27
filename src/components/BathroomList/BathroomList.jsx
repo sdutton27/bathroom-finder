@@ -19,17 +19,19 @@ export default function BathroomList({bathrooms, childClicked, currentLoc}) {
               {bathrooms?.map((bathroom, i)=>(
                 // <Typography key={i}>{bathroom.name}</Typography>
                 <Grid item key={i} ref={refs[i]}>
-                    <BathroomCard cardWidth='186' id={bathroom.id} key={i} index={i} 
-                        name={bathroom.name} street={bathroom.street} 
-                        city={bathroom.city}
-                        state={bathroom.state} country={bathroom.country} 
-                        directions={bathroom.directions} comment={bathroom.comment} 
-                        rating={(bathroom.upvote /(bathroom.upvote + bathroom.downvote)) * 5} 
-                        accessible={bathroom.accessible} 
-                        changingTable={bathroom.changing_table} unisex={bathroom.unisex}
+                    <BathroomCard cardWidth='186' key={i} index={i} 
+                        // id={bathroom.id}
+                        // name={bathroom.name} street={bathroom.street} 
+                        // city={bathroom.city}
+                        // state={bathroom.state} country={bathroom.country} 
+                        // directions={bathroom.directions} comment={bathroom.comment} 
+                        // rating={(bathroom.upvote /(bathroom.upvote + bathroom.downvote)) * 5} 
+                        // accessible={bathroom.accessible} 
+                        // changingTable={bathroom.changing_table} unisex={bathroom.unisex}
                         selected={Number(childClicked) === i}
                         refProp={refs[i]}
                         currentLoc={currentLoc}
+                        bathroom={bathroom}
                     />
                 </Grid>
                 

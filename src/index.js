@@ -8,6 +8,7 @@ import { initializeApp } from "firebase/app";
 
 import ThemeProvider from './context/ThemeContext';
 import NavContextProvider from './context/NavContext';
+import FavoritesContextProvider from './context/FavoritesContext';
 
 
 const firebaseConfig = {
@@ -30,7 +31,9 @@ root.render(
       <ThemeProvider>
         <UserContextProvider>
           <NavContextProvider>
-          <App />
+            <FavoritesContextProvider>
+              <App />
+            </FavoritesContextProvider>
           </NavContextProvider>
         </UserContextProvider>
       </ThemeProvider>

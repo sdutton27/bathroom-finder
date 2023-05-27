@@ -20,6 +20,9 @@ import SearchCard from '../../components/SearchCard/SearchCard'
 import BathroomCard from '../../components/BathroomCard/BathroomCard'
 import BathroomList from '../../components/BathroomList/BathroomList'
 
+import { FavoritesContext } from '../../context/FavoritesContext'
+import FavoritesCard from '../../components/FavoritesCard/FavoritesCard'
+
 export default function MapPage() {
   const [coordinates, setCoordinates] = useState({ lat: 40.71427, lng: -74.00597})
   const {setCurrentPage} = useContext(NavContext)
@@ -38,9 +41,15 @@ export default function MapPage() {
 
   const [childClicked, setChildClicked] = useState(null)
 
+  const {favorites, setFavorites, addToFavorites, removeFromFavorites} = useContext(FavoritesContext)
+
   const handleSearchChange = (e) => {
     setLocationSearchVal(e.target.value)
+
+    // addToFavorites({"msg":"3", "id":3})
+    // console.log({favorites})
   }
+
 
   const onLoad = (autoC) => setAutocomplete(autoC);
 
@@ -160,6 +169,9 @@ export default function MapPage() {
       setCoordinates({ lat: latitude, lng: longitude })
       setCenterCoords({ lat: latitude, lng: longitude })
   })
+
+
+  // setFavorites([{"msg":1},{"msg":2},{"msg":3}])
   // searchBathroomsAroundLoc(coordinates.lat, coordinates.lng);
   // console.log("bounds: " + bounds)
   // let's try getting the place info based on those coords 
@@ -293,6 +305,12 @@ export default function MapPage() {
         // <img src={`data:image/jpeg;base64,${searchLocBase64}`} style={{opacity: '.7'}} />
         : <></>} */}
         {/* <BathroomCard cardWidth='186' id='7447' /> */}
+        {/* <Box align="center">
+          {favorites?.map((bathroom, i)=>(
+            // <Typography key={i} sx={{color:'text.primary', marginLeft:40}} onClick={()=>{removeFromFavorites(bathroom)}}>{bathroom.name}</Typography>
+            <FavoritesCard key={i} bathroom={bathroom}/>
+          ))}
+        </Box> */}
     </Box>
   )
 }

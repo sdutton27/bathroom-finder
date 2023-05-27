@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useContext } from 'react'
 
 
 import { Card, Grid } from '@mui/material';
@@ -16,12 +16,15 @@ import AccordionDetails from '@mui/material/AccordionDetails';
 import Typography from '@mui/material/Typography';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 
-export default function BathroomCard({ name, index, cardWidth, 
-                                id, street, state, city, country, directions, comment, 
-                                rating, accessible, changingTable, unisex, 
+import { FavoritesContext } from '../../context/FavoritesContext';
+
+export default function BathroomCard({ bathroom, index, cardWidth,
                                 selected, refProp, currentLoc}) {
-     
+    
+    const {favorites, setFavorites, addToFavorites, removeFromFavorites, inFavorites} = useContext(FavoritesContext)                                
+
     console.log(selected)
+    console.log("bathroom is: " + JSON.stringify(bathroom))
     // if a place is selected, move into that view 
     if(selected === true) {
         console.log({refProp})
@@ -40,12 +43,12 @@ export default function BathroomCard({ name, index, cardWidth,
                     {/* <Typography sx={{lineHeight: 1, paddingLeft: 1, paddingTop: 1}}>A</Typography> */}
                 </Grid>
                 <Grid item align="center">
-                    <Typography sx={{fontSize:20, fontWeight:500, paddingTop: "32px", paddingBottom:"4px", wordWrap: 'break-word', width: `${((cardWidth * 10 / 12) - 10)}px`}}>{name}</Typography>
-                    <Typography sx={{fontWeight: 300, wordWrap: 'break-word', width: `${((cardWidth * 10 / 12) - 10)}px`}}>{street}</Typography>
-                    <Typography sx={{fontWeight: 300, wordWrap: 'break-word', width: `${((cardWidth * 10 / 12) - 10)}px`}}>{city}, {country==="US"||country==="USA"||country==="United States"? state : country}</Typography>
+                    <Typography sx={{fontSize:20, fontWeight:500, paddingTop: "32px", paddingBottom:"4px", wordWrap: 'break-word', width: `${((cardWidth * 10 / 12) - 10)}px`}}>{bathroom.name}</Typography>
+                    <Typography sx={{fontWeight: 300, wordWrap: 'break-word', width: `${((cardWidth * 10 / 12) - 10)}px`}}>{bathroom.street}</Typography>
+                    <Typography sx={{fontWeight: 300, wordWrap: 'break-word', width: `${((cardWidth * 10 / 12) - 10)}px`}}>{bathroom.city}, {bathroom.country==="US"||bathroom.country==="USA"||bathroom.country==="United States"? bathroom.state : bathroom.country}</Typography>
                 </Grid>
                 <Grid item align="center">
-                    <a href={`https://www.refugerestrooms.org/restrooms/${id}`} target="_blank"><Rating name="half-rating"sx={{fontSize: "1rem", direction: "column"}} fontSize=".5rem" value={rating} precision={.25} readOnly /></a>
+                    <a href={`https://www.refugerestrooms.org/restrooms/${bathroom.id}`} target="_blank"><Rating name="half-rating"sx={{fontSize: "1rem", direction: "column"}} fontSize=".5rem" value={(bathroom.upvote /(bathroom.upvote + bathroom.downvote)) * 5} precision={.25} readOnly /></a>
                 </Grid>
             
                 {/* <Grid item align="center">
@@ -69,20 +72,25 @@ export default function BathroomCard({ name, index, cardWidth,
             </Grid>
             <Grid container item direction="column" xs={2} spacing={1} sx={{paddingTop: 1, paddingBottom:1}}>
                 <Grid item>
-                    <a href={`https://www.google.com/maps/dir/?api=1&origin=${currentLoc.replace(/ /g, '+')}&destination=${name.replace(/ /g, '+') + "+" + street.replace(/ /g, '+') + "+" + city.replace(/ /g, '+') }`} target="_blank"><img src={require("./google-maps.png")} alt="google maps icon" height="22px"/></a>
+                    <a href={`https://www.google.com/maps/dir/?api=1&origin=${currentLoc.replace(/ /g, '+')}&destination=${bathroom.name.replace(/ /g, '+') + "+" + bathroom.street.replace(/ /g, '+') + "+" + bathroom.city.replace(/ /g, '+') }`} target="_blank"><img src={require("./google-maps.png")} alt="google maps icon" height="22px"/></a>
                 </Grid>
                 <Grid item>
-                    <TransgenderIcon color={unisex===true?"":"disabled"}></TransgenderIcon>
+                    <TransgenderIcon color={bathroom.unisex===true?"":"disabled"}></TransgenderIcon>
                 </Grid>
                 <Grid item>
-                    <AccessibleIcon color={accessible===true?"":"disabled"}/>
+                    <AccessibleIcon color={bathroom.accessible===true?"":"disabled"}/>
                 </Grid>
                 <Grid item>
-                    <BabyChangingStationIcon color={changingTable===true?"":"disabled"}/>
+                    <BabyChangingStationIcon color={bathroom.changingTable===true?"":"disabled"}/>
                 </Grid>
                 <Grid item>
                     {/* <Favorite /> */}
-                    <FavoriteBorder />
+                    {inFavorites(bathroom) ? 
+                    <Favorite onClick={()=>{removeFromFavorites(bathroom)}}/>
+                    :
+                    <FavoriteBorder onClick={()=>{addToFavorites(bathroom)}} />
+                    }
+                    {/* <FavoriteBorder onClick={()=>{addToFavorites(bathroom)}} /> */}
                 </Grid>
             </Grid>
             <Grid item xs={12}>
@@ -96,26 +104,26 @@ export default function BathroomCard({ name, index, cardWidth,
                         <Typography>More Info</Typography>
                         </AccordionSummary>
                         <AccordionDetails>
-                            {comment === null || comment === "" ? <></>
+                            {bathroom.comment === null || bathroom.comment === "" ? <></>
                         : 
                         <>
                         <Typography sx={{fontWeight:500}}>
                             Info:
                         </Typography>
                         <Typography sx={{fontWeight:300}}>
-                        {comment}
+                        {bathroom.comment}
                         </Typography>
                         <br></br>
                         </>
                         }
-                        {directions === null || directions === "" ? <></>
+                        {bathroom.directions === null || bathroom.directions === "" ? <></>
                         : 
                         <>
                         <Typography sx={{fontWeight:500}}>
                             Directions:
                         </Typography>
                         <Typography sx={{fontWeight:300}}>
-                            {directions}
+                            {bathroom.directions}
                         </Typography>
                         </>}
                         </AccordionDetails>

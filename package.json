@@ -5,6 +5,7 @@
   "dependencies": {
     "@emotion/react": "^11.11.0",
     "@emotion/styled": "^11.11.0",
+    "@googlemaps/markerclusterer": "^2.1.4",
     "@iconify/icons-mdi": "^1.2.44",
     "@iconify/react": "^4.1.0",
     "@mui/icons-material": "^5.11.16",

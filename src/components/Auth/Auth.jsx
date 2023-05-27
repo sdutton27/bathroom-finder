@@ -1,6 +1,7 @@
-import React, { useState, useContext } from 'react'
+import React, { useState, useEffect, useContext } from 'react'
 
 import { UserContext } from '../../context/UserContext'
+import { FavoritesContext } from '../../context/FavoritesContext';
 
 import './auth.css';
 
@@ -29,6 +30,8 @@ export default function Auth() {
     // const [checked, setChecked] = useState(true)
 
     const {user, setUser, logMeIn, logMeOut, userUnlocked, setUserUnlocked} = useContext(UserContext)
+
+    const { setFavorites } = useContext(FavoritesContext)
 
     const handleLockClick = (e) => {
         if (greenClass === 'green') {
@@ -218,6 +221,36 @@ export default function Auth() {
             }
         }
     }
+
+    // FOR RETRIEVING THE USER'S FAVORITES
+    const getFavorites = async () => {
+        // const url = 'http://127.0.0.1:5000/api/favorites';
+    
+        if (user.apitoken) { // if the user is logged in
+          const res = await fetch('http://127.0.0.1:5000/api/favorites', {
+              headers: {Authorization: `Bearer ${user.apitoken}`}
+          })
+          const data = await res.json()
+          console.log(data)
+          if (data.status === 'ok') {
+              console.log('the favorites list was a success')
+              setFavorites(data.favorites)
+          }
+          else {
+              // if you log out then if should log out
+              // setCart([])
+              console.log('the favorites list was a failure')
+              setFavorites([])
+          }
+        } else { // if the user has logged out 
+            setFavorites([])
+        }
+    
+      }
+
+    useEffect(()=>{
+        getFavorites()
+    },[user])
 
     // const onDoorCheckChange = (e) => {
     //     if (checked === true) {
