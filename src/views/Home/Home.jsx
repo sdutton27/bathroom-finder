@@ -13,6 +13,9 @@ import './home.css'
 import {useContext} from 'react'
 import { UserContext } from '../../context/UserContext';
 import { NavContext } from '../../context/NavContext';
+
+import { FavoritesContext } from '../../context/FavoritesContext';
+
 // import { ThemeContext } from '../../context/ThemeContext';
 import { useTheme } from '@emotion/react';
 
@@ -24,7 +27,7 @@ const Home = () => {
   const {user, userUnlocked, setUserUnlocked, showHomepage, setShowHomepage} = useContext(UserContext)
   const {setCurrentPage} = useContext(NavContext)
   // const [userUnlocked, setUserUnlocked] = useState('locked')
-
+  const {getFavorites} = useContext(FavoritesContext)
   // const [showHomepage, setShowHomepage] = useState('invisible-home-page')
 
     const onDoorCheckChange = (e) => {
@@ -53,7 +56,8 @@ const Home = () => {
       if (userUnlocked === 'unlocked') {
         console.log('now we are unlocked')
         setTimeout(()=>{return setShowHomepage('visible-home-page')}, 2000)
-        
+        // here is where we should also call getFavorites()
+        getFavorites()
       } else {
         console.log('now we are locked')
       }

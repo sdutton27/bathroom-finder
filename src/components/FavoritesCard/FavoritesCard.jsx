@@ -36,7 +36,7 @@ export default function FavoritesCard({bathroom}) {
                     }
                 </Grid>
             </Grid>
-            <Grid item align="center" spacing={2} xs={12}>
+            <Grid item align="center" xs={12}>
                 <Typography sx={{fontSize:20, fontWeight:500, padding:"0px 20px", wordWrap: 'break-word'}}>{bathroom.name}</Typography>
                 <Typography sx={{fontWeight: 300, wordWrap: 'break-word'}}>{bathroom.street}</Typography>
                 <Typography sx={{fontWeight: 300, wordWrap: 'break-word'}}>{bathroom.city}, {bathroom.country==="US"||bathroom.country==="USA"||bathroom.country==="United States"? bathroom.state : bathroom.country}</Typography>

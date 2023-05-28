@@ -20,30 +20,26 @@ export default function FavoritesPage() {
   const theme = useTheme()
   useEffect(()=>{
     setCurrentPage('favorites');
-    // getFavorites();
+    getFavorites();
   },[])
 
-  // const getFavorites = async () => {
-  //   // const url = 'http://127.0.0.1:5000/api/favorites';
+  // we should move this to FavoritesContext so that getFavorites is called on mount to turn into the { favorites }
+  const getFavorites = async () => {
+    const url = `http://127.0.0.1:5000/api/favorites`;
+    const options = {
+        //method: "GET",
+        //mode: 'no-cors',
+        headers: {
+            "Content-Type": 'application/json',
+            Authorization: `Bearer ${user.apitoken}`
+        },
+        // body: JSON.stringify(bathroom)
+    };
+    const res = await fetch(url, options);
+    const data = await res.json();
+    console.log(data)
+  }
 
-  //   if (user.apitoken) { // if the user is logged in
-  //     const res = await fetch('http://127.0.0.1:5000/api/favorites', {
-  //         headers: {Authorization: `Bearer ${user.apitoken}`}
-  //     })
-  //     const data = await res.json()
-  //     console.log(data)
-  //     if (data.status === 'ok') {
-  //         // setCart(data.cart)
-  //         console.log('the favorites list was a success')
-  //     }
-  //     else {
-  //         // if you log out then if should log out
-  //         // setCart([])
-  //         console.log('the favorites list was a failure')
-  //     }
-  //   }
-
-  // }
 
   return (
     <div className="page-container" style={{backgroundColor: theme.palette.background.default}}>
