@@ -18,18 +18,20 @@ import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 
 import { FavoritesContext } from '../../context/FavoritesContext';
 
+import { HeartButton } from '../HeartButton/HeartButton';
+
 export default function BathroomCard({ bathroom, index, cardWidth,
                                 selected, refProp, currentLoc}) {
     
     const {favorites, setFavorites, addToFavorites, removeFromFavorites, inFavorites} = useContext(FavoritesContext)                                
 
-    console.log(selected)
-    console.log("bathroom is: " + JSON.stringify(bathroom))
+    // console.log(selected)
+    // console.log("bathroom is: " + JSON.stringify(bathroom))
     // if a place is selected, move into that view 
     if(selected === true) {
-        console.log({refProp})
+        // console.log({refProp})
         refProp?.current?.scrollIntoView({ behavior: "smooth", block: "start"}) 
-        console.log('should be scrolling')
+        // console.log('should be scrolling')
         // setTimeout(function () {refProp?.current?.scrollIntoView({ behavior: "smooth", block: "start"})}, 100)
     }                               
   
@@ -83,14 +85,14 @@ export default function BathroomCard({ bathroom, index, cardWidth,
                 <Grid item>
                     <BabyChangingStationIcon color={bathroom.changingTable===true?"":"disabled"}/>
                 </Grid>
-                <Grid item>
+                <Grid item sx={{padding:"0px !important"}}>
                     {/* <Favorite /> */}
-                    {inFavorites(bathroom) ? 
-                    <Favorite onClick={()=>{removeFromFavorites(bathroom)}}/>
+                    {/* {inFavorites(bathroom) ? 
+                        <Favorite onClick={()=>{removeFromFavorites(bathroom)}}/>
                     :
-                    <FavoriteBorder onClick={()=>{addToFavorites(bathroom)}} />
-                    }
-                    {/* <FavoriteBorder onClick={()=>{addToFavorites(bathroom)}} /> */}
+                        <FavoriteBorder onClick={()=>{addToFavorites(bathroom)}} />
+                    } */}
+                    <HeartButton bathroom={bathroom} size={28}/>
                 </Grid>
             </Grid>
             <Grid item xs={12}>

@@ -15,30 +15,31 @@ import { UserContext } from '../../context/UserContext';
 
 export default function FavoritesPage() {
   const {setCurrentPage} = useContext(NavContext)
-  const {favorites} = useContext(FavoritesContext)
+  const {favorites, getFavorites} = useContext(FavoritesContext)
   const { user } = useContext(UserContext)
   const theme = useTheme()
   useEffect(()=>{
     setCurrentPage('favorites');
     getFavorites();
+    console.log({favorites})
   },[])
 
-  // we should move this to FavoritesContext so that getFavorites is called on mount to turn into the { favorites }
-  const getFavorites = async () => {
-    const url = `http://127.0.0.1:5000/api/favorites`;
-    const options = {
-        //method: "GET",
-        //mode: 'no-cors',
-        headers: {
-            "Content-Type": 'application/json',
-            Authorization: `Bearer ${user.apitoken}`
-        },
-        // body: JSON.stringify(bathroom)
-    };
-    const res = await fetch(url, options);
-    const data = await res.json();
-    console.log(data)
-  }
+  // // we should move this to FavoritesContext so that getFavorites is called on mount to turn into the { favorites }
+  // const getFavorites = async () => {
+  //   const url = `http://127.0.0.1:5000/api/favorites`;
+  //   const options = {
+  //       //method: "GET",
+  //       //mode: 'no-cors',
+  //       headers: {
+  //           "Content-Type": 'application/json',
+  //           Authorization: `Bearer ${user.apitoken}`
+  //       },
+  //       // body: JSON.stringify(bathroom)
+  //   };
+  //   const res = await fetch(url, options);
+  //   const data = await res.json();
+  //   // console.log(data)
+  // }
 
 
   return (

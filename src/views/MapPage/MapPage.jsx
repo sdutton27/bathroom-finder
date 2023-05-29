@@ -41,11 +41,11 @@ export default function MapPage() {
 
   const [childClicked, setChildClicked] = useState(null)
 
-  const {favorites, setFavorites, addToFavorites, removeFromFavorites} = useContext(FavoritesContext)
+  const {getFavorites} = useContext(FavoritesContext)
 
   const handleSearchChange = (e) => {
     setLocationSearchVal(e.target.value)
-
+    
     // addToFavorites({"msg":"3", "id":3})
     // console.log({favorites})
   }
@@ -55,11 +55,11 @@ export default function MapPage() {
 
   const onPlaceChanged = () => {
     // console.log(autocomplete.gm_bindings_.bounds."502".Rj.formattedPrediction);
-    console.log(autocomplete)
+    // console.log(autocomplete)
     //console.log(autocomplete['gm_accessors_']['place']['Is']['Rj']['gm_accessors_']['place']['Rj']['formattedPrediction'])
     //setLocationSearchVal(autocomplete['gm_accessors_']['place']['Is']['Rj']['gm_accessors_']['place']['Rj']['formattedPrediction']) 
     setLocationSearchVal(autocomplete['gm_accessors_']['place']['Rj']['formattedPrediction'])  
-    console.log(autocomplete['gm_accessors_']['place']['Rj']['place']['place_id'])
+    // console.log(autocomplete['gm_accessors_']['place']['Rj']['place']['place_id'])
 
   }
 
@@ -83,7 +83,7 @@ export default function MapPage() {
   }
 
   const searchBathroomsAroundLoc = async (lat, lng, north, east, south, west)=> {
-    console.log({lat, lng})
+    // console.log({lat, lng})
     const url = `http://127.0.0.1:5000/api/search-around-loc/${lat.toString()}/${lng.toString()}/${north.toString()}/${east.toString()}/${south.toString()}/${west.toString()}`;
     const options = {
         // mode: 'no-cors',
@@ -96,8 +96,8 @@ export default function MapPage() {
     const data = await res.json();
     if (data.status === 'ok'){
         // Show success msg
-        console.log(data)
-        console.log('success')
+        // console.log(data)
+        // console.log('success')
     }
     setBathrooms(data.results)
   }
@@ -116,8 +116,12 @@ export default function MapPage() {
     const data = await res.json();
     if (data.status === 'ok'){
         // Show success msg
-        console.log(data)
-        console.log('successfully got places data')
+        //console.log(data)
+        //console.log('successfully got places data')
+        //console.log(data['data']['candidates'][0]['name'])
+        //console.log(data['data']['candidates'][0]['formatted_address'])
+        // Make sure name is formatted properly on SearchCard 
+        setCurrentLoc(data['data']['candidates'][0]['name'] + "\n" + data['data']['candidates'][0]['formatted_address'])
         try {
           setSearchLocPhoto(data['data']['candidates'][0]['photos'][0]['photo_reference'])
         } catch {
@@ -141,15 +145,15 @@ export default function MapPage() {
     const data = await res.json();
     if (data.status === 'ok'){
         // Show success msg
-        console.log(data)
-        console.log('successfully got photo')
+        // console.log(data)
+        // console.log('successfully got photo')
         setSearchLocBase64(data['base_64_image'])
     }
   }
 
   useEffect(()=>{
     if (searchLocPhoto !== '') {
-      console.log('op! we have a photo to place')
+      // console.log('op! we have a photo to place')
       getSearchLocPhoto(searchLocPhoto);
     }
   },[searchLocPhoto])
@@ -158,16 +162,18 @@ export default function MapPage() {
     if (bounds != "") {
       //searchBathroomsAroundLoc(coordinates.lat, coordinates.lng);
       searchBathroomsAroundLoc(centerCoords.lat, centerCoords.lng, bounds.ne.lat, bounds.ne.lng, bounds.sw.lat, bounds.sw.lng); // around center so that the search changes depending on what's on the screen 
-      console.log("bounds: north: " + bounds['ne']['lat'] + " east: " + bounds.ne.lng + " south: " + bounds['sw']['lat'] + " west: " + bounds.sw.lng)
+      // console.log("bounds: north: " + bounds['ne']['lat'] + " east: " + bounds.ne.lng + " south: " + bounds['sw']['lat'] + " west: " + bounds.sw.lng)
     }
     },[bounds])
 
   useEffect(()=>{
     setCurrentPage('map');
+    getFavorites();
     navigator.geolocation.getCurrentPosition(({ coords: {latitude, longitude}})=>{
-      console.log({latitude, longitude})
+      // console.log({latitude, longitude})
       setCoordinates({ lat: latitude, lng: longitude })
       setCenterCoords({ lat: latitude, lng: longitude })
+
   })
 
 

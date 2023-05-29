@@ -48,6 +48,10 @@ const FavoritesContextProvider = ({children}) => {
         // const res = await fetch(url, options);
         // const data = await res.json();
         // console.log(data)
+
+        // console.log(bathroom.bathroom)
+        // bathroom = bathroom.bathroom 
+
         const data = await addBathroom(bathroom)
 
         // have to change this 

@@ -16,6 +16,11 @@ import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 
 import { FavoritesContext } from '../../context/FavoritesContext';
 
+import { HeartButton } from '../HeartButton/HeartButton';
+
+// import heart from 'react-useanimations/lib/heart'
+// import UseAnimations from 'react-useanimations'; // for Favoriting heart animation
+
 export default function FavoritesCard({bathroom}) {
     const {favorites, setFavorites, addToFavorites, removeFromFavorites, inFavorites} = useContext(FavoritesContext)                                                             
     
@@ -28,19 +33,20 @@ export default function FavoritesCard({bathroom}) {
                 <Grid item align="start" xs={6}>
                         <a href={`https://www.google.com/maps?saddr=My+Location&daddr=${bathroom.name.replace(/ /g, '+') + "+" + bathroom.street.replace(/ /g, '+') + "+" + bathroom.city.replace(/ /g, '+') }`} target="_blank"><img src={require("./google-maps.png")} style={{margin: "12.5px"}} alt="google maps icon" height="30px"/></a>
                 </Grid>
-                <Grid item align="end" xs={6}>
-                    {inFavorites(bathroom) ? 
+                <Grid item align="end" xs={6} sx={{paddingRight: '10px'}}>
+                    {/* {inFavorites(bathroom) ? 
                         <Favorite fontSize="large" sx={{margin: "10px"}} onClick={()=>{removeFromFavorites(bathroom)}}/>
                         :
                         <FavoriteBorder fontSize="large" onClick={()=>{addToFavorites(bathroom)}} />
-                    }
+                    } */}
+                    <HeartButton bathroom={bathroom} size={46}/>
                 </Grid>
             </Grid>
             <Grid item align="center" xs={12}>
                 <Typography sx={{fontSize:20, fontWeight:500, padding:"0px 20px", wordWrap: 'break-word'}}>{bathroom.name}</Typography>
                 <Typography sx={{fontWeight: 300, wordWrap: 'break-word'}}>{bathroom.street}</Typography>
                 <Typography sx={{fontWeight: 300, wordWrap: 'break-word'}}>{bathroom.city}, {bathroom.country==="US"||bathroom.country==="USA"||bathroom.country==="United States"? bathroom.state : bathroom.country}</Typography>
-                <a href={`https://www.refugerestrooms.org/restrooms/${bathroom.id}`} target="_blank"><Rating name="half-rating"sx={{fontSize: 30}} value={(bathroom.upvote /(bathroom.upvote + bathroom.downvote)) * 5} precision={.25} readOnly /></a>
+                <a href={`https://www.refugerestrooms.org/restrooms/${bathroom.id}`} target="_blank"><Rating name="half-rating"sx={{fontSize: 30}} value={bathroom.rating} precision={.25} readOnly /></a>
             </Grid>
             {/* <Grid item container align="center"xs={12}> */}
             <Grid item container direction="row" xs={12}>

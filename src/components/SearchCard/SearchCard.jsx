@@ -23,7 +23,7 @@ export default function SearchCard({image_src, loc_name}) {
           alt="image of location"
         />
         <CardContent sx={{padding:0}}>
-          <Typography gutterBottom sx={{fontSize:'8px', color:'text.primary', padding: '1px 3px', textAlign:'center'}}>
+          <Typography gutterBottom sx={{whiteSpace: "pre-line", fontSize:'8px', color:'text.primary', padding: '1px 3px', textAlign:'center'}}>
           {loc_name}
           </Typography>
         </CardContent>

@@ -4,7 +4,7 @@ import { Grid } from '@mui/material'
 import BathroomCard from '../BathroomCard/BathroomCard'
 
 export default function BathroomList({bathrooms, childClicked, currentLoc}) {
-    console.log({childClicked})
+    // console.log({childClicked})
     const [refs, setRefs] = useState([])
 
     useEffect(()=>{
