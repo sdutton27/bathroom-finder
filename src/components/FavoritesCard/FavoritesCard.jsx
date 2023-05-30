@@ -33,7 +33,7 @@ export default function FavoritesCard({bathroom}) {
                 <Grid item align="start" xs={6}>
                         <a href={`https://www.google.com/maps?saddr=My+Location&daddr=${bathroom.name.replace(/ /g, '+') + "+" + bathroom.street.replace(/ /g, '+') + "+" + bathroom.city.replace(/ /g, '+') }`} target="_blank"><img src={require("./google-maps.png")} style={{margin: "12.5px"}} alt="google maps icon" height="30px"/></a>
                 </Grid>
-                <Grid item align="end" xs={6} sx={{paddingRight: '10px'}}>
+                <Grid item align="end" xs={6} sx={{paddingRight: '10px', marginTop:"7px"}}>
                     {/* {inFavorites(bathroom) ? 
                         <Favorite fontSize="large" sx={{margin: "10px"}} onClick={()=>{removeFromFavorites(bathroom)}}/>
                         :

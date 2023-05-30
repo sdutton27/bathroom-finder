@@ -89,7 +89,7 @@ export default function BathroomCard({ bathroom, index, cardWidth,
                 <Grid item>
                     <BabyChangingStationIcon color={bathroom.changingTable===true?"":"disabled"}/>
                 </Grid>
-                <Grid item sx={{padding:"0px !important"}}>
+                <Grid item sx={{padding:"0px !important", marginTop:"8px"}}>
                     {/* <Favorite /> */}
                     {/* {inFavorites(bathroom) ? 
                         <Favorite onClick={()=>{removeFromFavorites(bathroom)}}/>

@@ -147,45 +147,45 @@ export default function MapPage() {
 
       try {
         setSearchLocPhoto(data['data']['candidates'][0]['photos'][0]['photo_reference'])
-      //   // add to recent searches 
-      //   const photo_64 = await getSearchLocPhoto(data['data']['candidates'][0]['photos'][0]['photo_reference'])
-      // setRecentSearches((prev)=>{
-      //   return [
-      //     ...prev,
-      //     {
-      //       "origin_name" : data['data']['candidates'][0]['name'],
-      //       "origin_address" : data['data']['candidates'][0]['formatted_address'],
-      //       "photo_base_64" : `data:image/jpeg;base64,${photo_64}`,
-      //       "destination_name" : "", // someday this will not be null
-      //       "destination_address" : "" // someday this will not be null
-      //     }
-      //   ]
-      // })
-      // addRecentSearchLoc(data['data']['candidates'][0]['name'], data['data']['candidates'][0]['formatted_address'], `data:image/jpeg;base64,${photo_64}`
-      //                   ) // we will eventually add destination here too 
-        
+        //   // add to recent searches 
+        //   const photo_64 = await getSearchLocPhoto(data['data']['candidates'][0]['photos'][0]['photo_reference'])
+        // setRecentSearches((prev)=>{
+        //   return [
+        //     ...prev,
+        //     {
+        //       "origin_name" : data['data']['candidates'][0]['name'],
+        //       "origin_address" : data['data']['candidates'][0]['formatted_address'],
+        //       "photo_base_64" : `data:image/jpeg;base64,${photo_64}`,
+        //       "destination_name" : "", // someday this will not be null
+        //       "destination_address" : "" // someday this will not be null
+        //     }
+        //   ]
+        // })
+        // addRecentSearchLoc(data['data']['candidates'][0]['name'], data['data']['candidates'][0]['formatted_address'], `data:image/jpeg;base64,${photo_64}`
+        //                   ) // we will eventually add destination here too 
+
       } catch {
-        setRecentSearches((prev)=>{
+        setRecentSearches((prev) => {
           return [
             ...prev,
             {
-              "origin_name" : data['data']['candidates'][0]['name'],
-              "origin_address" : data['data']['candidates'][0]['formatted_address'],
-              "photo_base_64" : "",
-              "destination_name" : "", // someday this will not be null
-              "destination_address" : "" // someday this will not be null
+              "origin_name": data['data']['candidates'][0]['name'],
+              "origin_address": data['data']['candidates'][0]['formatted_address'],
+              "photo_base_64": "",
+              "destination_name": "", // someday this will not be null
+              "destination_address": "" // someday this will not be null
             }
           ]
         })
         addRecentSearchLoc(data['data']['candidates'][0]['name'], data['data']['candidates'][0]['formatted_address'], ""
-                          ) // we will eventually add destination here too 
-  
+        ) // we will eventually add destination here too 
+
 
         setSearchLocPhoto('')
         setSearchLocBase64('')
       }
       // console.log(data['data']['candidates'][0]['photos'][0]['photo_reference'])
-    } 
+    }
   }
 
   const getSearchLocPhoto = async (searchLocPhoto) => {
@@ -232,7 +232,7 @@ export default function MapPage() {
       //   ]
       // })
       addRecentSearchLoc(originName, originAddress, photo_64,
-                        ) // we will eventually add destination here too 
+      ) // we will eventually add destination here too 
     } else {
       // setRecentSearches((prev)=>{
       //   return [
@@ -247,7 +247,7 @@ export default function MapPage() {
       //   ]
       // })
       addRecentSearchLoc(originName, originAddress, ""
-                        ) // we will eventually add destination here too 
+      ) // we will eventually add destination here too 
 
     }
   }
@@ -369,36 +369,41 @@ export default function MapPage() {
           </Grid>
       </Grid> */}
       <Grid container spacing={2} sx={{ flexGrow: 1, marginTop: '0px', marginLeft: '0px', width: '100%' }}>
-        <Grid item container spacing={2} xs={12} sm={8}>
-          <Grid item container direction="row" spacing={1}>
-            <Grid item>
+        <Grid item container spacing={2} xs={12} sm={8} >
+          <Grid item container direction="row" xs={12} spacing={1} alignItems="center" justifyContent="center">
+            <Grid item xs={2} sx={{marginTop: "0px !important"}}>
               <SearchSwitch switchChecked={switchChecked} setSwitchChecked={setSwitchChecked} />
             </Grid>
-            <form onSubmit={handleSubmit}>
-              {switchChecked ?
-                <>
-                  <Grid item>
-                    {/* <Autocomplete onLoad={onLoad} onPlaceChanged={onPlaceChanged}> */}
-                    <SearchBar placeholder="Choose starting point..." width={'180px'} />
-                    {/* <TextField id="outlined-basic" label="Outlined" variant="outlined" /> */}
-                    {/* </Autocomplete> */}
+            
+              <form onSubmit={handleSubmit}>
+              <Grid item container direction="row" xs={12}>
+                {switchChecked ?
+                <></>
+                  // <>
+                  //   <Grid item xs={10}>
+                  //     {/* <Autocomplete onLoad={onLoad} onPlaceChanged={onPlaceChanged}> */}
+                  //     <SearchBar placeholder="Choose starting point..." width={'180px'} />
+                  //     {/* <TextField id="outlined-basic" label="Outlined" variant="outlined" /> */}
+                  //     {/* </Autocomplete> */}
+                  //   </Grid>
+                  //   <Grid item xs={2}>
+                  //     <SearchBar placeholder="Choose destination..." width={'180px'} />
+                  //   </Grid>
+                  // </>
+                  :
+                  <Grid item xs={10}>
+                    <Autocomplete onLoad={onLoad} onPlaceChanged={onPlaceChanged}>
+                      <SearchBar placeholder="Search for any location" width={'180px'} value={locationSearchVal} onChange={handleSearchChange} />
+                      {/* <SearchBar placeholder="Search for any location" width={'180px'} value={locationSearchVal} onChange={handleSearchChange}/> */}
+                    </Autocomplete>
                   </Grid>
-                  <Grid item>
-                    <SearchBar placeholder="Choose destination..." width={'180px'} />
-                  </Grid>
-                </>
-                :
-                <Grid item>
-                  <Autocomplete onLoad={onLoad} onPlaceChanged={onPlaceChanged}>
-                    <SearchBar placeholder="Search for any location" width={'180px'} value={locationSearchVal} onChange={handleSearchChange} />
-                    {/* <SearchBar placeholder="Search for any location" width={'180px'} value={locationSearchVal} onChange={handleSearchChange}/> */}
-                  </Autocomplete>
+                }
+                <Grid item xs={2}>
+                  <Button type="submit" sx={{ width: "50px", borderRadius: "8px", minWidth: "24px", padding: "5px", backgroundColor: 'success.main' }}>Go</Button>
                 </Grid>
-              }
-              <Grid item>
-                <Button type="submit" sx={{ width: "50px", borderRadius: "8px", minWidth: "24px", padding: "5px", backgroundColor: 'success.main' }}>Go</Button>
-              </Grid>
-            </form>
+                </Grid>
+              </form>
+            
           </Grid>
           <Grid item container xs={12} >
             {/* <Grid item>
@@ -407,7 +412,7 @@ export default function MapPage() {
             <Grid item xs={12} sx={{ height: '66vh', position: "relative" }}>
               <Map childClicked={childClicked} setChildClicked={setChildClicked} bathrooms={bathrooms} location={coordinates} zoomLevel={15} bounds={bounds} setBounds={setBounds} setCenterCoords={setCenterCoords} centerCoords={centerCoords} />
               {searchLocBase64 !== "" ?
-                <SearchCard image_src={searchLocBase64} originName={originName} originAddress={originAddress}/>
+                <SearchCard image_src={searchLocBase64} originName={originName} originAddress={originAddress} />
                 // <img src={`data:image/jpeg;base64,${searchLocBase64}`} style={{opacity: '.7'}} />
                 : <></>}
               {/* { searchLocBase64 !== "" ? 
@@ -442,9 +447,9 @@ export default function MapPage() {
         </Grid>
       </Grid>
       <Typography align="center" sx={{ color: 'text.primary' }}>This will be the Recent History/Favorites</Typography>
-      
+
       <RecentSearches />
-    
+
       {/* { searchLocBase64 !== "" ? 
         <SearchCard image_src={`data:image/jpeg;base64,${searchLocBase64}`} loc_name={currentLoc}/>
         // <img src={`data:image/jpeg;base64,${searchLocBase64}`} style={{opacity: '.7'}} />

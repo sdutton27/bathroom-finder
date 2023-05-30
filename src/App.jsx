@@ -11,6 +11,11 @@ import ThemeSwitch from './components/ThemeSwitch';
 
 import { UserContext } from './context/UserContext';
 
+import { GlobalStyles } from '@mui/material';
+import { useTheme } from '@emotion/react';
+
+import { ThemeContext } from './context/ThemeContext';
+
 import './app.css';
 
 // const getUserFromLocalStorage = () => {
@@ -43,7 +48,10 @@ export default function App() {
   //   navigate('/')
   // }
   const {showHomepage} = useContext(UserContext)
-
+  const theme = useTheme()
+  // const {currentTheme} = useContext(ThemeContext)
+  // console.log(currentTheme)
+  
   return (
     <div className="app">
          <Navbar />
@@ -57,6 +65,7 @@ export default function App() {
          {showHomepage === 'visible-home-page' ? 
          <ThemeSwitch className="theme-switch" style={{position: 'absolute', marginLeft: '30px', right:'0', bottom:'0'}}/>
          : <></>}
+         <GlobalStyles styles={{ body: { backgroundColor: theme.palette.background.default } }} />
       </div>
   )
 }

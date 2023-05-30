@@ -1,3 +1,8 @@
+html, body {
+    height: 100%;
+    position:relative;
+}
+
 .app {
     height: 100%;
 }
@@ -9,9 +14,20 @@
     bottom: 0px !important;
 } */
 
+.css-ebszos-MuiGrid-root>.MuiGrid-item {
+    padding-left: 0px !important;
+    padding-top: 0px !important;
+}
+
 .page-container {
     position: absolute;
+    top:0%;
+    bottom:0%;
+    left:0%;
+    right:0%;
+    /* z-index: -3; */
     margin-top: 57px; /* TO ACCOUNT FOR THE NAVBAR */
-    height: calc(100% - 57px);
+    /* height: calc(100% - 57px); */
+    height:100%;
     width: 100%;
 }

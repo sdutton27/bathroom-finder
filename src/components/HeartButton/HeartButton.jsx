@@ -30,7 +30,7 @@ export const HeartButton = ({bathroom, size}) => {
             }
           }}
           size={size}
-          wrapperStyle={{ marginTop: '8px' }}
+          // wrapperStyle={{ marginTop: '8px' }}
           animation={heart}
           align="center"
           strokeColor={"#e25a5e"}

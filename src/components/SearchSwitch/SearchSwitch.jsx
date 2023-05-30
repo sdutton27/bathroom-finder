@@ -11,7 +11,7 @@ const MaterialUISwitch = styled(Switch)(({ theme }) => ({
     height: 34,
     padding: 7,
     '& .MuiSwitch-switchBase': {
-      margin: 1,
+      // margin: 1,
       padding: 0,
       transform: 'translateX(6px)',
       '&.Mui-checked': {
@@ -80,7 +80,7 @@ const MaterialUISwitch = styled(Switch)(({ theme }) => ({
         <FormControlLabel
                                                     // if they check it then they want dark mode 
             control={<MaterialUISwitch checked={switchChecked} onChange={(e)=>{handleChange(e)}}/>}
-            sx={{margin:"0px"}}
+            sx={{margin:"0px !important"}}
             label=""
         />
     )

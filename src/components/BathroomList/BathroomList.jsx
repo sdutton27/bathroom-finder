@@ -14,7 +14,7 @@ export default function BathroomList({bathrooms, childClicked, originName, origi
     },[bathrooms])
 
   return (
-    <Grid item sx={{height: '66vh', overflow:'scroll'}}>
+    <Grid container item alignItems="center" justifyContent="center" sx={{height: '66vh', overflow:'scroll'}}>
               {/* <Typography align="center" sx={{color:'text.primary'}}>Search Results Here</Typography> */}
               {bathrooms?.map((bathroom, i)=>(
                 // <Typography key={i}>{bathroom.name}</Typography>

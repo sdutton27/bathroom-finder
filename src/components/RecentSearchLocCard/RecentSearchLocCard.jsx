@@ -7,7 +7,7 @@ import { useTheme } from '@emotion/react'
 export default function RecentSearchLocCard({originName, originAddress, image}) {
     const theme = useTheme()
     return (
-    <Card align="center" sx={{ width: "66vw", position: "relative", zIndex:"speed dial",}}>
+    <Card align="center" sx={{ backgroundColor: 'background.loc_card', width: "66vw", position: "relative", zIndex:"speed dial",}}>
       <CardActionArea align="center" sx={{width: "60px"}}>
         <CardMedia
           component="img"

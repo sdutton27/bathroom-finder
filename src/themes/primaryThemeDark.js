@@ -13,6 +13,9 @@ const themeOptions = {
     background: {
       default: '#11151C',
       paper: '#212D40',
+      card: '#6c8aa7',
+      card_secondary : '#98a9b9',
+      loc_card: '#9297c8'
     },
     text: {
       primary: '#d0d0d0',

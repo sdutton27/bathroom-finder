@@ -114,7 +114,7 @@ const RecentSearchContextProvider = ({children}) => {
                 // }))
 
                 const newList = recentSearches.map((searchedPlace)=>{
-                    if (searchedPlace.search_id == currentSearchID) {
+                    if (searchedPlace.search_id === currentSearchID) {
                         // if (searchedPlace.bathrooms.length > 0) {
 
                         
@@ -123,7 +123,8 @@ const RecentSearchContextProvider = ({children}) => {
                                 //bathroom
                                 bathrooms: [
                                     // [
-                                        bathroomID,
+                                        bathroom,
+                                        //data.data.bathroom, // add the bathroom info
                                         ...searchedPlace.bathrooms,
         
                                     // ]
