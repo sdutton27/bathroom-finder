@@ -151,7 +151,8 @@ const FavoritesContextProvider = ({children}) => {
     }
 
     const favoritesContext = {
-        favorites, setFavorites, addToFavorites, removeFromFavorites, inFavorites, getFavorites
+        favorites, setFavorites, addToFavorites, removeFromFavorites, 
+        inFavorites, getFavorites, addBathroom
     }
 
     return (

@@ -3,7 +3,7 @@ import React, {useEffect, useState, createRef} from 'react'
 import { Grid } from '@mui/material'
 import BathroomCard from '../BathroomCard/BathroomCard'
 
-export default function BathroomList({bathrooms, childClicked, currentLoc}) {
+export default function BathroomList({bathrooms, childClicked, originName, originAddress}) {
     // console.log({childClicked})
     const [refs, setRefs] = useState([])
 
@@ -30,7 +30,8 @@ export default function BathroomList({bathrooms, childClicked, currentLoc}) {
                         // changingTable={bathroom.changing_table} unisex={bathroom.unisex}
                         selected={Number(childClicked) === i}
                         refProp={refs[i]}
-                        currentLoc={currentLoc}
+                        originName={originName}
+                        originAddress={originAddress}
                         bathroom={bathroom}
                     />
                 </Grid>

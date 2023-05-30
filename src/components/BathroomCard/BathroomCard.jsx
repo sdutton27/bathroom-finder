@@ -19,18 +19,22 @@ import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import { FavoritesContext } from '../../context/FavoritesContext';
 
 import { HeartButton } from '../HeartButton/HeartButton';
+import { RecentSearchContext } from '../../context/RecentSearchContext';
 
 export default function BathroomCard({ bathroom, index, cardWidth,
-                                selected, refProp, currentLoc}) {
+                                selected, refProp, originName, originAddress}) {
     
     const {favorites, setFavorites, addToFavorites, removeFromFavorites, inFavorites} = useContext(FavoritesContext)                                
 
+    const { addRecentSearchBathroom } = useContext(RecentSearchContext)
     // console.log(selected)
     // console.log("bathroom is: " + JSON.stringify(bathroom))
     // if a place is selected, move into that view 
     if(selected === true) {
         // console.log({refProp})
         refProp?.current?.scrollIntoView({ behavior: "smooth", block: "start"}) 
+
+        addRecentSearchBathroom(bathroom)
         // console.log('should be scrolling')
         // setTimeout(function () {refProp?.current?.scrollIntoView({ behavior: "smooth", block: "start"})}, 100)
     }                               
@@ -74,7 +78,7 @@ export default function BathroomCard({ bathroom, index, cardWidth,
             </Grid>
             <Grid container item direction="column" xs={2} spacing={1} sx={{paddingTop: 1, paddingBottom:1}}>
                 <Grid item>
-                    <a href={`https://www.google.com/maps/dir/?api=1&origin=${currentLoc.replace(/ /g, '+')}&destination=${bathroom.name.replace(/ /g, '+') + "+" + bathroom.street.replace(/ /g, '+') + "+" + bathroom.city.replace(/ /g, '+') }`} target="_blank"><img src={require("./google-maps.png")} alt="google maps icon" height="22px"/></a>
+                    <a href={`https://www.google.com/maps/dir/?api=1&origin=${originName.replace(/ /g, '+')}+${originAddress.replace(/ /g, '+')}&destination=${bathroom.name.replace(/ /g, '+') + "+" + bathroom.street.replace(/ /g, '+') + "+" + bathroom.city.replace(/ /g, '+') }`} target="_blank"><img src={require("./google-maps.png")} alt="google maps icon" height="22px"/></a>
                 </Grid>
                 <Grid item>
                     <TransgenderIcon color={bathroom.unisex===true?"":"disabled"}></TransgenderIcon>

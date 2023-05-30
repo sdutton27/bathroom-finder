@@ -9,7 +9,7 @@ import { ThemeContext } from '../../context/ThemeContext';
 
 import { useTheme } from '@emotion/react'
 
-export default function SearchCard({image_src, loc_name}) {
+export default function SearchCard({image_src, originName, originAddress}) {
     //const {currentTheme} = useContext(ThemeContext)
     const theme = useTheme()
   return (
@@ -24,7 +24,7 @@ export default function SearchCard({image_src, loc_name}) {
         />
         <CardContent sx={{padding:0}}>
           <Typography gutterBottom sx={{whiteSpace: "pre-line", fontSize:'8px', color:'text.primary', padding: '1px 3px', textAlign:'center'}}>
-          {loc_name}
+          {originName}<br/>{originAddress}
           </Typography>
         </CardContent>
       </CardActionArea>

@@ -33,15 +33,14 @@ const UserContextProvider = ({children}) => {
         navigate('/')
     }
 
-    // const userCtx = {
-    //     user: user,
-    //     setUser: setUser, 
-    //     logMeIn: logMeIn,
-    //     logMeOut, logMeOut,
+    // const getUser = () => {
+    //     setUser(getUserFromLocalStorage())
     // }
 
     const userContext = {
-        user, setUser, logMeIn, logMeOut, showHomepage, setShowHomepage, userUnlocked, setUserUnlocked,
+        user, setUser, logMeIn, logMeOut, showHomepage, setShowHomepage, 
+        userUnlocked, setUserUnlocked, 
+        //getUser
     }
 
     return (

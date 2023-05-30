@@ -2,13 +2,14 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 import App from './App';
 import { BrowserRouter } from 'react-router-dom';
-import UserContextProvider from './context/UserContext';
 
 import { initializeApp } from "firebase/app";
 
 import ThemeProvider from './context/ThemeContext';
 import NavContextProvider from './context/NavContext';
 import FavoritesContextProvider from './context/FavoritesContext';
+import RecentSearchContextProvider from './context/RecentSearchContext';
+import UserContextProvider from './context/UserContext';
 
 
 const firebaseConfig = {
@@ -32,7 +33,9 @@ root.render(
         <UserContextProvider>
           <NavContextProvider>
             <FavoritesContextProvider>
+              <RecentSearchContextProvider>
               <App />
+              </RecentSearchContextProvider>
             </FavoritesContextProvider>
           </NavContextProvider>
         </UserContextProvider>
