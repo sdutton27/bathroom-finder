@@ -3,20 +3,96 @@ import React, {useEffect, useState, createRef} from 'react'
 import { Grid } from '@mui/material'
 import BathroomCard from '../BathroomCard/BathroomCard'
 
-export default function BathroomList({bathrooms, childClicked, originName, originAddress}) {
+export default function BathroomList({genderNeutralFilter, accessibleFilter, changingTableFilter, bathrooms, childClicked, originName, originAddress}) {
     // console.log({childClicked})
     const [refs, setRefs] = useState([])
 
+    const [filteredBathrooms, setFilteredBathrooms] = useState([])
+
     useEffect(()=>{
+        getFilteredBathrooms()
         // map each bathroom- we only need the index, so _ for first value
+        if (filteredBathrooms !== []) {
+            const references = Array(filteredBathrooms?.length).fill().map((_, i)=> refs[i] || createRef())
+            setRefs(references)
+        } else {
+            const references = Array(bathrooms?.length).fill().map((_, i)=> refs[i] || createRef())
+            setRefs(references)
+        }
+        
         const references = Array(bathrooms?.length).fill().map((_, i)=> refs[i] || createRef())
         setRefs(references)
+        // console.log({genderNeutralFilter})
     },[bathrooms])
 
+    useEffect(()=>{
+        getFilteredBathrooms()
+        // console.log({bathrooms})
+        // let newBathrooms = []
+        // for (let i=0; i < bathrooms.length; i++) {
+        //     // if (bathrooms[i].accessible === accessibleFilter 
+        //     //     && bathrooms[i].changing_table === changingTableFilter
+        //     //     && bathrooms[i].unisex === genderNeutralFilter){
+        //     //         newBathrooms.push(bathrooms[i])
+        //     // }
+        //     if ((accessibleFilter === true && bathrooms[i].accessible === true || accessibleFilter == false)
+        //         && (bathrooms[i].changing_table === true && changingTableFilter === true || changingTableFilter == false)
+        //         && (bathrooms[i].unisex === true && genderNeutralFilter === true || genderNeutralFilter === false)
+        //     ){
+        //         newBathrooms.push(bathrooms[i])
+        //     }
+        // }
+        // setFilteredBathrooms(newBathrooms)
+        // console.log({newBathrooms})
+    },[genderNeutralFilter, accessibleFilter, changingTableFilter])
+
+    const getFilteredBathrooms = () => {
+        let newBathrooms = []
+        for (let i=0; i < bathrooms.length; i++) {
+            // if (bathrooms[i].accessible === accessibleFilter 
+            //     && bathrooms[i].changing_table === changingTableFilter
+            //     && bathrooms[i].unisex === genderNeutralFilter){
+            //         newBathrooms.push(bathrooms[i])
+            // }
+            if ((accessibleFilter === true && bathrooms[i].accessible === true || accessibleFilter == false)
+                && (bathrooms[i].changing_table === true && changingTableFilter === true || changingTableFilter == false)
+                && (bathrooms[i].unisex === true && genderNeutralFilter === true || genderNeutralFilter === false)
+            ){
+                newBathrooms.push(bathrooms[i])
+            }
+        }
+        setFilteredBathrooms(newBathrooms)
+    }
+
   return (
-    <Grid container item alignItems="center" justifyContent="center" sx={{height: '66vh', overflow:'scroll'}}>
+    <Grid id="bathroom-list" container item alignItems="center" justifyContent="center" sx={{height: '77vh', overflow:'scroll'}}>
               {/* <Typography align="center" sx={{color:'text.primary'}}>Search Results Here</Typography> */}
-              {bathrooms?.map((bathroom, i)=>(
+              
+              {filteredBathrooms !==[]?
+                filteredBathrooms?.map((bathroom, i)=>(
+                    // <Typography key={i}>{bathroom.name}</Typography>
+                    <Grid item key={i} ref={refs[i]}>
+                        <BathroomCard cardWidth='186' key={i} index={i} 
+                            // id={bathroom.id}
+                            // name={bathroom.name} street={bathroom.street} 
+                            // city={bathroom.city}
+                            // state={bathroom.state} country={bathroom.country} 
+                            // directions={bathroom.directions} comment={bathroom.comment} 
+                            // rating={(bathroom.upvote /(bathroom.upvote + bathroom.downvote)) * 5} 
+                            // accessible={bathroom.accessible} 
+                            // changingTable={bathroom.changing_table} unisex={bathroom.unisex}
+                            selected={Number(childClicked) === i}
+                            refProp={refs[i]}
+                            originName={originName}
+                            originAddress={originAddress}
+                            bathroom={bathroom}
+                        />
+                    </Grid>
+                    
+                  ))
+
+               :
+               bathrooms?.map((bathroom, i)=>(
                 // <Typography key={i}>{bathroom.name}</Typography>
                 <Grid item key={i} ref={refs[i]}>
                     <BathroomCard cardWidth='186' key={i} index={i} 
@@ -36,7 +112,29 @@ export default function BathroomList({bathrooms, childClicked, originName, origi
                     />
                 </Grid>
                 
-              ))}
+              ))
+               }
+              {/* {bathrooms?.map((bathroom, i)=>(
+                // <Typography key={i}>{bathroom.name}</Typography>
+                <Grid item key={i} ref={refs[i]}>
+                    <BathroomCard cardWidth='186' key={i} index={i} 
+                        // id={bathroom.id}
+                        // name={bathroom.name} street={bathroom.street} 
+                        // city={bathroom.city}
+                        // state={bathroom.state} country={bathroom.country} 
+                        // directions={bathroom.directions} comment={bathroom.comment} 
+                        // rating={(bathroom.upvote /(bathroom.upvote + bathroom.downvote)) * 5} 
+                        // accessible={bathroom.accessible} 
+                        // changingTable={bathroom.changing_table} unisex={bathroom.unisex}
+                        selected={Number(childClicked) === i}
+                        refProp={refs[i]}
+                        originName={originName}
+                        originAddress={originAddress}
+                        bathroom={bathroom}
+                    />
+                </Grid>
+                
+              ))} */}
             </Grid> 
   )
 }

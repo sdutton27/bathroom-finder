@@ -37,6 +37,7 @@ const RecentSearchContextProvider = ({children}) => {
 
         const res = await fetch(url, options);
         const data = await res.json();
+        console.log({data})
         // console.log(data)
         // console.log("search id : ")
         // console.log(data.data.search_id)

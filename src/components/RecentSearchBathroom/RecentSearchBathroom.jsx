@@ -34,7 +34,7 @@ export default function RecentSearchBathroom({ bathroom, originName, originAddre
     setOpen(false)
   },[])
   return (
-    <Card className="recent-search-card" sx={{ backgroundColor: "background.card", padding: "5px", marginBottom: "5px", width: "66vw" }}>
+    <Card className="recent-search-card" sx={{ backgroundColor: "background.card", padding: "5px", marginBottom: "5px", width: "100%" }}>
       <Grid container sx={{ width: '100%' }}>
         <Grid container item justifyContent="center" xs={12}>
           <Grid item align="start" justifyContent="center" xs={6}>

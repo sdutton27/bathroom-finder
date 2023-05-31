@@ -1,4 +1,4 @@
-import React, { useContext } from 'react'
+import React, { useEffect, useContext } from 'react'
 
 
 import { Card, Grid } from '@mui/material';
@@ -30,14 +30,31 @@ export default function BathroomCard({ bathroom, index, cardWidth,
     // console.log(selected)
     // console.log("bathroom is: " + JSON.stringify(bathroom))
     // if a place is selected, move into that view 
-    if(selected === true) {
-        // console.log({refProp})
-        refProp?.current?.scrollIntoView({ behavior: "smooth", block: "start"}) 
+    // if(selected === true) {
+    //     // console.log({refProp})
+    //     refProp?.current?.scrollIntoView({ behavior: "smooth", block: "start"}) 
 
-        addRecentSearchBathroom(bathroom)
-        // console.log('should be scrolling')
-        // setTimeout(function () {refProp?.current?.scrollIntoView({ behavior: "smooth", block: "start"})}, 100)
-    }                               
+    //     console.log({refProp})
+
+    //     addRecentSearchBathroom(bathroom)
+    //     // console.log('should be scrolling')
+    //     // setTimeout(function () {refProp?.current?.scrollIntoView({ behavior: "smooth", block: "start"})}, 100)
+    // }   
+    
+    useEffect(()=>{
+        if (selected === true) {
+            //refProp?.current?.scrollIntoView({ behavior: "smooth", block: "start"}) 
+            // refProp?.current?.scrollTop = 0;
+            console.log({refProp})
+            //refProp?.current?.scroll({top:0,behavior:'smooth'})
+            console.log(refProp.current.offsetTop)
+            const topPos = refProp?.current?.offsetTop 
+            //document.getElementById('bathroom-list')?.scrollTop = topPos;
+            document.getElementById('bathroom-list')?.scrollTo({top:topPos-118,behavior:'smooth'});
+            // refProp?.current?.scrollTo({top:0,behavior:'smooth'})
+            addRecentSearchBathroom(bathroom)
+        }
+    },[selected])
   
     return (
     <Card sx={{marginBottom:"5px", width: `${cardWidth}px`}}>

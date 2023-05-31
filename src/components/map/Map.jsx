@@ -1,5 +1,6 @@
 import React, { useEffect, useContext, useState } from 'react'
 import GoogleMapReact from 'google-map-react'
+
 import './map.css'
 
 import { ThemeContext } from '../../context/ThemeContext'
@@ -39,6 +40,9 @@ const Map = ({childClicked, setChildClicked, bathrooms, location, zoomLevel, bou
   //   // console.log(photoLat)
   // }
 
+  // async function initMap() {
+  //   const { Map } = await google.maps.importLibrary("maps");
+  // }
   // const getPhotoLng = () => {
   //   // const east = bounds.ne.lng 
   //   // const west = bounds.sw.lng

@@ -8,6 +8,10 @@ import { Autocomplete } from '@react-google-maps/api'
 
 import { useTheme } from '@emotion/react'
 
+import TransgenderIcon from '@mui/icons-material/Transgender';
+import AccessibleIcon from '@mui/icons-material/Accessible';
+import BabyChangingStationIcon from '@mui/icons-material/BabyChangingStation';
+
 import './mappage.css'
 
 import Box from '@mui/material/Box';
@@ -37,8 +41,8 @@ export default function MapPage() {
   //const [placeID, setPlaceID] = useState(""); we could have this if we wanted to search via place_id instead of the title but the title works just fine 
   // const [currentLoc, setCurrentLoc] = useState("");
 
-  const [originName, setOriginName] = useState("");
-  const [originAddress, setOriginAddress] = useState("");
+  const [originName, setOriginName] = useState("New York City");
+  const [originAddress, setOriginAddress] = useState("New York, NY");
   // we will also have destination
 
 
@@ -53,6 +57,11 @@ export default function MapPage() {
 
   const { getFavorites } = useContext(FavoritesContext)
   const { recentSearches, setRecentSearches, addRecentSearchLoc } = useContext(RecentSearchContext)
+
+  // for the filtering buttons - just going to do this on frontend 
+  const [genderNeutralFilter, setGenderNeutralFilter] = useState(false)
+  const [accessibleFilter, setAccessibleFilter] = useState(false)
+  const [changingTableFilter, setChangingTableFilter] = useState(false)
 
 
   const { user, getUser } = useContext(UserContext)
@@ -70,6 +79,7 @@ export default function MapPage() {
   const onLoad = (autoC) => setAutocomplete(autoC);
 
   const onPlaceChanged = () => {
+
     // console.log(autocomplete.gm_bindings_.bounds."502".Rj.formattedPrediction);
     // console.log(autocomplete)
     //console.log(autocomplete['gm_accessors_']['place']['Is']['Rj']['gm_accessors_']['place']['Rj']['formattedPrediction'])
@@ -301,6 +311,8 @@ export default function MapPage() {
       // console.log({latitude, longitude})
       setCoordinates({ lat: latitude, lng: longitude })
       setCenterCoords({ lat: latitude, lng: longitude })
+      setOriginName("My Location")
+      setOriginAddress("My Location")
 
     })
 
@@ -329,6 +341,21 @@ export default function MapPage() {
   //   console.log(response.results[0])
   //   console.log(response.results[0].formatted_address)
   // }
+
+  useEffect(()=>{
+    console.log({genderNeutralFilter})
+  },[genderNeutralFilter])
+
+  const handleCheck = (e) => {
+    console.log(e.target.name)
+    if (e.target.name === 'genderNeutral') {
+      setGenderNeutralFilter(prev=>(!prev))
+    } else if (e.target.name === 'accessible') {
+      setAccessibleFilter(prev=>(!prev))
+    } else if (e.target.name === 'changingTable') {
+      setChangingTableFilter(prev=>(!prev))
+    }
+   }
 
   // const location = {
   //     //address: '1600 Amphitheatre Parkway, Mountain View, california.',
@@ -405,11 +432,11 @@ export default function MapPage() {
               </form>
             
           </Grid>
-          <Grid item container xs={12} >
+          <Grid item container justifyContent="center" xs={12} >
             {/* <Grid item>
             <Typography>hi</Typography>
             </Grid> */}
-            <Grid item xs={12} sx={{ height: '66vh', position: "relative" }}>
+            <Grid item xs={12} sx={{ height: '66vh', position: "relative", paddingLeft: "0px"}}>
               <Map childClicked={childClicked} setChildClicked={setChildClicked} bathrooms={bathrooms} location={coordinates} zoomLevel={15} bounds={bounds} setBounds={setBounds} setCenterCoords={setCenterCoords} centerCoords={centerCoords} />
               {searchLocBase64 !== "" ?
                 <SearchCard image_src={searchLocBase64} originName={originName} originAddress={originAddress} />
@@ -422,13 +449,36 @@ export default function MapPage() {
               } */}
 
             </Grid>
+
+            <Typography sx={{ fontSize: "20px", color: 'text.primary' }}>Recent Searches</Typography>
+              
+            <RecentSearches />
+          
+          
           </Grid>
         </Grid>
         <Grid container item xs={12} sm={4} direction="column">
-          <Grid item >
-            <Typography align="center" sx={{ color: 'text.primary' }}>Bathrooms Nearby</Typography>
+          <Grid item sx={{paddingTop: "0px !important"}}>
+            <Typography align="center" sx={{ fontSize: "20px", color: 'text.primary' }}>Nearby Bathrooms</Typography>
           </Grid>
-          <BathroomList originName={originName} originAddress={originAddress} childClicked={childClicked} bathrooms={bathrooms} />
+          <Grid item container justifyContent="center" direction="row">
+            <Grid item className="toggle">
+              <input name="genderNeutral" type="checkbox"  onChange={handleCheck}/>
+              <span className="button"></span>
+              <TransgenderIcon className="label" />
+            </Grid>
+            <Grid item className="toggle">
+              <input name="accessible" type="checkbox" onChange={handleCheck}/>
+              <span className="button"></span>
+              <AccessibleIcon className="label" />
+            </Grid>
+            <Grid item className="toggle">
+              <input name="changingTable" type="checkbox" onChange={handleCheck}/>
+              <span className="button"></span>
+              <BabyChangingStationIcon className="label" />
+            </Grid>
+          </Grid>
+          <BathroomList genderNeutralFilter={genderNeutralFilter} accessibleFilter={accessibleFilter} changingTableFilter={changingTableFilter}  originName={originName} originAddress={originAddress} childClicked={childClicked} bathrooms={bathrooms} />
           {/* <Grid item sx={{height: '66vh', overflow:'scroll'}}>
               {bathrooms?.map((bathroom, i)=>(
             
@@ -446,9 +496,9 @@ export default function MapPage() {
             </Grid>  */}
         </Grid>
       </Grid>
-      <Typography align="center" sx={{ color: 'text.primary' }}>This will be the Recent History/Favorites</Typography>
+      {/* <Typography align="center" sx={{ color: 'text.primary' }}>This will be the Recent History/Favorites</Typography> */}
 
-      <RecentSearches />
+      {/* <RecentSearches /> */}
 
       {/* { searchLocBase64 !== "" ? 
         <SearchCard image_src={`data:image/jpeg;base64,${searchLocBase64}`} loc_name={currentLoc}/>

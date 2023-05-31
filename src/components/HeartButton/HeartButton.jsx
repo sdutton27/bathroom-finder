@@ -1,4 +1,4 @@
-import React, { useState, useContext } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 
 import heart from 'react-useanimations/lib/heart'
 import UseAnimations from 'react-useanimations'; // for Favoriting heart animation
@@ -8,10 +8,14 @@ import { FavoritesContext } from '../../context/FavoritesContext';
 import { NavContext } from '../../context/NavContext';
 
 export const HeartButton = ({bathroom, size}) => {
-    const {addToFavorites, removeFromFavorites, inFavorites} = useContext(FavoritesContext)                                
+    const {favorites, addToFavorites, removeFromFavorites, inFavorites} = useContext(FavoritesContext)                                
     const {currentPage} = useContext(NavContext)
 
     // console.log(size)
+    useEffect(()=>{
+      console.log("favorites have changed")
+      console.log(`${inFavorites(bathroom)} is the favorite status for ${bathroom.name}`)
+    },[favorites])
 
     return (
     //   <div align={{currentPage === 'map' ? "center" : "right"}}>
