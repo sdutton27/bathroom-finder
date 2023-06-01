@@ -119,7 +119,7 @@ export default function BathroomCard({ bathroom, index, cardWidth,
             <Grid item xs={12}>
                     <Accordion>
                         <AccordionSummary
-                        expandIcon={<ExpandMoreIcon />}
+                        expandIcon={<ExpandMoreIcon onClick={()=>{addRecentSearchBathroom(bathroom);}}/>}
                         aria-controls="panel1a-content"
                         id="panel1a-header"
                         sx={{height: 15}}
