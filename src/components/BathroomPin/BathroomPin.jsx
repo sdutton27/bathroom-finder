@@ -3,13 +3,15 @@ import React from 'react'
 import { Typography } from '@mui/material'
 import { useTheme } from '@emotion/react'
 
+import './bathroom-pin.css'
+
 // export default function BathroomPin({index, lat, lng}) {
 export default function BathroomPin({index, lat, lng, selected,}) {
   // console.log("a pin is selected: " + selected)
   const theme = useTheme()
   return (
     // <div lat={lat} lng={lng} style={{position:"relative", zIndex:100}}>
-    <div style={{zIndex:100}}>
+    <div className="bathroom-pin" style={{zIndex:100}}>
       {selected ?
       // <img src={require("./pin.png")} lat={lat} lng={lng} style={{height:"60px", position:"absolute", filter: "drop-shadow(1px 2px 3px #00000044)"}} />
       <>

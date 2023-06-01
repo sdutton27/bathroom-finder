@@ -3,14 +3,19 @@ import React, {useEffect, useState, useContext, createRef} from 'react'
 import { Grid } from '@mui/material'
 import BathroomCard from '../BathroomCard/BathroomCard'
 import { BathroomsContext } from '../../context/BathroomsContext'
+import { RecentSearchContext } from '../../context/RecentSearchContext'
 
 export default function BathroomList({genderNeutralFilter, accessibleFilter, changingTableFilter, childClicked, originName, originAddress}) {
     // console.log({childClicked})
     const [refs, setRefs] = useState([])
 
     const {bathrooms, setBathrooms, filteredBathrooms, setFilteredBathrooms} = useContext(BathroomsContext)
-
+    const {getRecentSearches} = useContext(RecentSearchContext)
     // const [filteredBathrooms, setFilteredBathrooms] = useState([])
+
+    useEffect(()=>{
+        getRecentSearches();
+    },[]) 
 
     useEffect(()=>{
         getFilteredBathrooms()

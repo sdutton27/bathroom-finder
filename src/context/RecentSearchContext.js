@@ -81,8 +81,8 @@ const RecentSearchContextProvider = ({children}) => {
             ]
           })
         }
-        
-
+        console.log({searchLocChanged})
+        setSearchLocChanged(true)
         return data
     }
 

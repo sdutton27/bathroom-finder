@@ -105,6 +105,7 @@ export default function MapPage() {
   const handleSubmit = (e) => {
     e.preventDefault()
     // if just one location
+    setSearchLocChanged(false)
     if (!switchChecked) {
       // on google maps documentation
       const lat = autocomplete.getPlace().geometry.location.lat();
@@ -338,7 +339,7 @@ export default function MapPage() {
 
   useEffect(() => {
     setCurrentPage('map');
-    getRecentSearches();
+    // getRecentSearches();
     getFavorites();
 
     let location_on = false
@@ -481,7 +482,7 @@ export default function MapPage() {
                   </Grid>
                 }
                 <Grid item xs={2}>
-                  <Button type="submit" sx={{ width: "50px", borderRadius: "8px", minWidth: "24px", padding: "5px", backgroundColor: 'success.main' }}>Go</Button>
+                  <Button type="submit" className="go-button" sx={{ width: "50px", borderRadius: "8px", minWidth: "24px", padding: "5px", backgroundColor: 'success.main' }}>Go</Button>
                 </Grid>
                 </Grid>
               </form>

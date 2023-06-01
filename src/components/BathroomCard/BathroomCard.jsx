@@ -26,7 +26,7 @@ export default function BathroomCard({ bathroom, index, cardWidth,
     
     const {favorites, setFavorites, addToFavorites, removeFromFavorites, inFavorites} = useContext(FavoritesContext)                                
 
-    const { currentSearchID, addRecentSearchBathroom, searchLocChanged, setSearchLocChanged } = useContext(RecentSearchContext)
+    const { getRecentSearches, currentSearchID, addRecentSearchBathroom, searchLocChanged, setSearchLocChanged } = useContext(RecentSearchContext)
     // console.log(selected)
     // console.log("bathroom is: " + JSON.stringify(bathroom))
     // if a place is selected, move into that view 
@@ -39,7 +39,11 @@ export default function BathroomCard({ bathroom, index, cardWidth,
     //     addRecentSearchBathroom(bathroom)
     //     // console.log('should be scrolling')
     //     // setTimeout(function () {refProp?.current?.scrollIntoView({ behavior: "smooth", block: "start"})}, 100)
-    // }   
+    // }  
+
+    // useEffect(()=>{
+    //     getRecentSearches();
+    // },[]) 
     
     useEffect(()=>{
         if (selected === true) {
@@ -62,7 +66,7 @@ export default function BathroomCard({ bathroom, index, cardWidth,
 
     const addBathroom = async () =>{
         // this needs to wait for the other one to finish
-        if (currentSearchID !== "") {
+        if (currentSearchID !== "" && searchLocChanged === true) {
             await addRecentSearchBathroom(bathroom)
         }
         

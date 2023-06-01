@@ -1,23 +1,80 @@
-.about-page {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+
+.bottom-slide .slideanim {
+  visibility:hidden;
+  visibility:visible\9;
 }
+.bottom-slide .slideanim.slide {                  
+  visibility: visible;                  
+  animation: slide 1s;
+}
+
+@keyframes bottom-slide {
+  0% {
+      opacity: 0;
+      transform: translateY(50%);
+  } 
+  100% {
+      opacity: 1;
+      transform: translateY(0);
+  } 
+}
+
+.left-slide .slideanim {
+  visibility:hidden;
+  visibility:visible\9;
+}
+.left-slide .slideanim.slide {                  
+  visibility: visible;                  
+  animation: left-slide 1s;
+}
+
+
+.right-slide .slideanim {
+  visibility:hidden;
+  visibility:visible\9;
+}
+.right-slide .slideanim.slide {                  
+  visibility: visible;                  
+  animation: right-slide 1s;
+}
+
+@keyframes left-slide {
+  0% {
+      opacity: 0;
+      transform: translateX(-50%);
+  } 
+  100% {
+      opacity: 1;
+      transform: translateX(0);
+  } 
+}
+
+@keyframes right-slide {
+  0% {
+      opacity: 0;
+      transform: translateX(50%);
+  } 
+  100% {
+      opacity: 1;
+      transform: translateX(0);
+  } 
+}
+
 
 
 .letter {
     animation-name: loadingF;
-    animation-duration: 1.6s;
+    animation-duration: 3.96s;
     animation-iteration-count: infinite;
     animation-direction: linear;
     float: left;
-    font-size: 14px;
-    color: #777;
+    font-size: 30px;
+    color: #240a0a;
   }
 
-  /* .letter-holder {
-    padding: 16px;
-  } */
+  .letter-holder {
+    
+  }
 
   .l-1 {
     animation-delay: 0.48s;
@@ -48,6 +105,63 @@
   }
   .l-10 {
     animation-delay: 1.56s;
+  }
+  .l-11 {
+    animation-delay: 1.68s;
+  }
+  .l-12 {
+    animation-delay: 1.8s;
+  }
+  .l-13 {
+    animation-delay: 1.92s;
+  }
+  .l-14 {
+    animation-delay: 2.04s;
+  }
+  .l-15 {
+    animation-delay: 2.16s;
+  }
+  .l-16 {
+    animation-delay: 2.28s;
+  }
+  .l-17 {
+    animation-delay: 2.4s;
+  }
+  .l-18 {
+    animation-delay: 2.52s;
+  }
+  .l-19 {
+    animation-delay: 2.64s;
+  }
+  .l-20 {
+    animation-delay: 2.76s;
+  }
+  .l-21 {
+    animation-delay: 2.88s;
+  }
+  .l-22 {
+    animation-delay: 3s;
+  }
+  .l-23 {
+    animation-delay: 3.12s;
+  }
+  .l-24 {
+    animation-delay: 3.24s;
+  }
+  .l-25 {
+    animation-delay: 3.36s;
+  }
+  .l-26 {
+    animation-delay: 3.48s;
+  }
+  .l-27 {
+    animation-delay: 3.6s;
+  }
+  .l-28 {
+    animation-delay: 3.72s;
+  }
+  .l-29 {
+    animation-delay: 3.84s;
   }
 
   .clear {

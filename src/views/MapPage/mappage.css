@@ -174,3 +174,8 @@
   transform: rotate(360deg);
 }
 } 
+
+/* GO BUTTON */
+.css-1nujngz-MuiButtonBase-root-MuiButton-root:hover {
+  background-color: rgb(105, 201, 131) !important;
+}

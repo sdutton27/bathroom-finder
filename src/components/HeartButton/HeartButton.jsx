@@ -75,9 +75,9 @@ export const HeartButton = ({bathroom, size}) => {
         /> */}
         <Grid item>
                     {inFavorites(bathroom) ? 
-                    <Favorite sx={{color: "#e25a5e"}} onClick={()=>{removeFromFavorites(bathroom); addRecentSearchBathroom(bathroom);}}/>
+                    <Favorite sx={{color: "#e25a5e"}} onClick={()=>{addRecentSearchBathroom(bathroom); removeFromFavorites(bathroom); }}/>
                     :
-                    <FavoriteBorder sx={{color: "#e25a5e"}} onClick={()=>{addToFavorites(bathroom); addRecentSearchBathroom(bathroom);}} />
+                    <FavoriteBorder sx={{color: "#e25a5e"}} onClick={()=>{addRecentSearchBathroom(bathroom); addToFavorites(bathroom); }} />
                     }
                 </Grid>
       </div>

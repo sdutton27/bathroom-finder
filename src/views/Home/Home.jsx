@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react'
 import Auth from '../../components/Auth/Auth'
 
+import {Link} from '@mui/material'
+
 import Button from '@mui/material/Button';
 
 // import { UserContext } from '../../context/UserContext';
@@ -92,9 +94,11 @@ const Home = () => {
                 </div> 
                                     {/* don't need this className unless going to do a Zoom  */}
                 {/* <div id="home-page" className={userUnlocked==='unlocked'? 'visible-home-page':""}> */}
+                
                 <div id="home-page" className={showHomepage} style={{backgroundColor: theme.palette.background.default }}>
-                  <h1>This is the homepage</h1>
-                  <Button color="primary" variant="contained">Text</Button>
+                  <h1>Welcome!</h1>
+                  <p>(Please forgive me this will be a better homepage)</p>
+                  <Button color="primary" variant="contained"><Link to="about" underline="none">About Us</Link></Button>
                   {/* <ThemeSwitch /> */}
                 </div>
                 
@@ -108,8 +112,8 @@ const Home = () => {
     </div>
     : 
       <div id="home-page" className={`page-container ${showHomepage}`} style={{backgroundColor: theme.palette.background.default }}>
-        <h1>This is the homepage</h1>
-        <Button color="primary" variant="contained">Text</Button>
+        <h1>Welcome!</h1>
+                  <p>(Please forgive me this will be a better homepage)</p>
       </div>
     }
     </>
