@@ -58,13 +58,14 @@ export default function MapPage() {
   const [childClicked, setChildClicked] = useState(null)
 
   const { getFavorites } = useContext(FavoritesContext)
-  const { recentSearches, setRecentSearches, addRecentSearchLoc } = useContext(RecentSearchContext)
+  const { recentSearches, setRecentSearches, addRecentSearchLoc, getRecentSearches } = useContext(RecentSearchContext)
 
   // for the filtering buttons - just going to do this on frontend 
   const [genderNeutralFilter, setGenderNeutralFilter] = useState(false)
   const [accessibleFilter, setAccessibleFilter] = useState(false)
   const [changingTableFilter, setChangingTableFilter] = useState(false)
 
+  const [loadingBathrooms, setLoadingBathrooms] = useState(false)
 
   const { user, getUser } = useContext(UserContext)
 
@@ -106,12 +107,15 @@ export default function MapPage() {
       // setCurrentLoc(locationSearchVal); // the text for the photo
       setLocationSearchVal(""); // reset the search
       //searchBathroomsAroundLoc(lat, lng); // deleting this because it will already be called since the bounds will change 
+      // console.log("set loading bathrooms")
     }
 
   }
 
   const searchBathroomsAroundLoc = async (lat, lng, north, east, south, west) => {
     // console.log({lat, lng})
+    console.log("set loading bathrooms")
+    setLoadingBathrooms(true)
     const url = `http://127.0.0.1:5000/api/search-around-loc/${lat.toString()}/${lng.toString()}/${north.toString()}/${east.toString()}/${south.toString()}/${west.toString()}`;
     const options = {
       // mode: 'no-cors',
@@ -129,6 +133,8 @@ export default function MapPage() {
       // console.log('success')
     }
     setBathrooms(data.results)
+    setLoadingBathrooms(false)
+    console.log("set finished loading bathrooms")
   }
 
   const getGooglePlacesInfo = async (locationSearchVal) => {
@@ -307,6 +313,7 @@ export default function MapPage() {
 
   useEffect(() => {
     setCurrentPage('map');
+    getRecentSearches();
     getFavorites();
     // getUser();
     navigator.geolocation.getCurrentPosition(({ coords: { latitude, longitude } }) => {
@@ -453,7 +460,7 @@ export default function MapPage() {
 
             </Grid>
 
-            <Typography sx={{ fontSize: "20px", color: 'text.primary' }}>Recent Searches</Typography>
+            <Typography sx={{ fontSize: "20px", color: 'text.primary', marginTop: "10px" }}>Recent Searches</Typography>
               
             <RecentSearches />
           
@@ -482,7 +489,31 @@ export default function MapPage() {
             </Grid>
           </Grid>
           {/* <BathroomList genderNeutralFilter={genderNeutralFilter} accessibleFilter={accessibleFilter} changingTableFilter={changingTableFilter}  originName={originName} originAddress={originAddress} childClicked={childClicked} bathrooms={bathrooms} /> */}
+          {loadingBathrooms ? 
+            <div class="loader">
+              <div class="loader-inner">
+                <div class="loader-line-wrap">
+                  <div class="loader-line"></div>
+                </div>
+                <div class="loader-line-wrap">
+                  <div class="loader-line"></div>
+                </div>
+                <div class="loader-line-wrap">
+                  <div class="loader-line"></div>
+                </div>
+                <div class="loader-line-wrap">
+                  <div class="loader-line"></div>
+                </div>
+                <div class="loader-line-wrap">
+                  <div class="loader-line"></div>
+                </div>
+              </div>
+            </div>
+          : 
+          
           <BathroomList genderNeutralFilter={genderNeutralFilter} accessibleFilter={accessibleFilter} changingTableFilter={changingTableFilter}  originName={originName} originAddress={originAddress} childClicked={childClicked} />
+          } 
+          
           {/* <Grid item sx={{height: '66vh', overflow:'scroll'}}>
               {bathrooms?.map((bathroom, i)=>(
             

@@ -11,6 +11,25 @@ const RecentSearchContextProvider = ({children}) => {
     const { inFavorites, addBathroom } = useContext(FavoritesContext)
     const [currentSearchID, setCurrentSearchID] = useState("")
 
+    const getRecentSearches = async () => {
+        const url = "http://127.0.0.1:5000/api/recent-search/all"
+        const options = {
+            // mode: 'no-cors',
+            method: "GET",
+            headers: {
+                "Content-Type": 'application/json',
+                Authorization: `Bearer ${user.apitoken}`
+            },
+        }
+        const res = await fetch(url, options);
+        const data = await res.json();
+        console.log({data})
+        if (data.status === 'ok') {
+            setRecentSearches(data.data)
+            setCurrentSearchID(data.last_search_id)
+        }
+    }
+
     const addRecentSearchLoc = async (originName, originAddress, searchLocBase64="", destinationName="", destinationAddress="") => {
         // let url;
         // if (destinationName !== "") { 
@@ -160,9 +179,23 @@ const RecentSearchContextProvider = ({children}) => {
         }
     }
 
+    const deleteOldSearches = async () => {
+        const url = "http://127.0.0.1:5000/api/recent-search/delete-all"
+        const options = {
+            // mode: 'no-cors',
+            method: "DELETE",
+            headers: {
+                "Content-Type": 'application/json', // does not need to be authorized since we want to delete these!
+            },
+        };
+        const res = await fetch(url, options);
+        const data = await res.json();
+        // console.log(data)
+    }
+
     const recentSearchContext = {
         recentSearches, setRecentSearches, addRecentSearchLoc, currentSearchID, 
-        setCurrentSearchID, addRecentSearchBathroom,
+        setCurrentSearchID, addRecentSearchBathroom, getRecentSearches, deleteOldSearches
     }
 
     return (

@@ -3,11 +3,10 @@ import { NavContext } from '../../context/NavContext';
 
 import { useTheme } from '@emotion/react';
 
+import { FeedbackForm } from '../../components/FeedbackForm/FeedbackForm';
+
 import './about.css';
 
-import TransgenderIcon from '@mui/icons-material/Transgender';
-import AccessibleIcon from '@mui/icons-material/Accessible';
-import BabyChangingStationIcon from '@mui/icons-material/BabyChangingStation';
 
 export default function About() {
   const { setCurrentPage } = useContext(NavContext)
@@ -33,25 +32,27 @@ export default function About() {
         <div className="l-10 letter">.</div>
       </div>
 
-
-      <div className="container">
-        <div className="toggle">
-          <input type="checkbox"/>
-            <span className="button"></span>
-            {/* <span className="label">+</span> */}
-            <TransgenderIcon className="label" />
-        </div>
-        <div className="toggle">
-          <input type="checkbox"/>
-            <span className="button"></span>
-            <AccessibleIcon className="label" />
-        </div>
-        <div className="toggle">
-          <input type="checkbox"/>
-            <span className="button"></span>
-            <BabyChangingStationIcon className="label" />
+      <div class="loader">
+        <div class="loader-inner">
+          <div class="loader-line-wrap">
+            <div class="loader-line"></div>
+          </div>
+          <div class="loader-line-wrap">
+            <div class="loader-line"></div>
+          </div>
+          <div class="loader-line-wrap">
+            <div class="loader-line"></div>
+          </div>
+          <div class="loader-line-wrap">
+            <div class="loader-line"></div>
+          </div>
+          <div class="loader-line-wrap">
+            <div class="loader-line"></div>
+          </div>
         </div>
       </div>
+
+      <FeedbackForm />
 
     </div>
   )

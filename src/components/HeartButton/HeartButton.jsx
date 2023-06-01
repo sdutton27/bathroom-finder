@@ -20,12 +20,12 @@ export const HeartButton = ({bathroom, size}) => {
     // const [isFavorited, setIsFavorited] = useState(inFavorites(bathroom))
 
     // console.log(size)
-    useEffect(()=>{
-      console.log("favorites have changed")
-      console.log(`${inFavorites(bathroom)} is the favorite status for ${bathroom.name}`)
-      // setIsFavorited(inFavorites(bathroom))
-      // addRecentSearchBathroom(bathroom);
-    },[favorites])
+    // useEffect(()=>{
+    //   // console.log("favorites have changed")
+    //   // console.log(`${inFavorites(bathroom)} is the favorite status for ${bathroom.name}`)
+    //   // setIsFavorited(inFavorites(bathroom))
+    //   // addRecentSearchBathroom(bathroom);
+    // },[favorites])
 
     // useEffect(()=>{
 

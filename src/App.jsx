@@ -1,4 +1,4 @@
-import React, { useState, useContext } from 'react'
+import React, { useState, useEffect, useContext } from 'react'
 import { Routes, Route, useNavigate } from 'react-router-dom';
 
 import Navbar from './components/Navbar/Navbar'
@@ -15,6 +15,7 @@ import { GlobalStyles } from '@mui/material';
 import { useTheme } from '@emotion/react';
 
 import { ThemeContext } from './context/ThemeContext';
+import { RecentSearchContext } from './context/RecentSearchContext';
 
 import './app.css';
 
@@ -48,9 +49,14 @@ export default function App() {
   //   navigate('/')
   // }
   const {showHomepage} = useContext(UserContext)
+  const {deleteOldSearches} = useContext(RecentSearchContext) 
   const theme = useTheme()
   // const {currentTheme} = useContext(ThemeContext)
   // console.log(currentTheme)
+  useEffect(()=>{
+    // console.log('app is rendered')
+    deleteOldSearches()
+  },[])
   
   return (
     <div className="app">

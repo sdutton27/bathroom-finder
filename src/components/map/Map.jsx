@@ -97,7 +97,7 @@ const Map = ({childClicked, setChildClicked, location, zoomLevel, bounds, setBou
     <div className="map">
       {/* <h2 className="map-h2">Come visit us at our campus</h2> */}
 
-      <div className="google-map" style={{position: "absolute", zIndex:0, top:0, left:0}}>
+      <div className="google-map" style={{position: "absolute", zIndex:0, top:0, left:0, height: '66vh'}}>
                                               {/* API KEY - move this */}
         <GoogleMapReact bootstrapURLKeys={{key: process.env.REACT_APP_GOOGLE_MAPS_API_KEY}} 
                         defaultCenter={location} 

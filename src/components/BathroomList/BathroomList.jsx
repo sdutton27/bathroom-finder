@@ -71,7 +71,7 @@ export default function BathroomList({genderNeutralFilter, accessibleFilter, cha
     }
 
   return (
-    <Grid id="bathroom-list" container item alignItems="center" justifyContent="center" sx={{height: '77vh', overflow:'scroll'}}>
+    <Grid id="bathroom-list" container item alignItems="flex-start" justifyContent="center" sx={{height: '77vh', overflow:'scroll'}}>
               {/* <Typography align="center" sx={{color:'text.primary'}}>Search Results Here</Typography> */}
               
               {filteredBathrooms !==[]?
