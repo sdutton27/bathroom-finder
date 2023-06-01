@@ -10,6 +10,7 @@ import NavContextProvider from './context/NavContext';
 import FavoritesContextProvider from './context/FavoritesContext';
 import RecentSearchContextProvider from './context/RecentSearchContext';
 import UserContextProvider from './context/UserContext';
+import BathroomsContextProvider from './context/BathroomsContext';
 
 
 const firebaseConfig = {
@@ -32,11 +33,13 @@ root.render(
       <ThemeProvider>
         <UserContextProvider>
           <NavContextProvider>
-            <FavoritesContextProvider>
-              <RecentSearchContextProvider>
-              <App />
-              </RecentSearchContextProvider>
-            </FavoritesContextProvider>
+            <BathroomsContextProvider>
+              <FavoritesContextProvider>
+                <RecentSearchContextProvider>
+                <App />
+                </RecentSearchContextProvider>
+              </FavoritesContextProvider>
+            </BathroomsContextProvider>
           </NavContextProvider>
         </UserContextProvider>
       </ThemeProvider>

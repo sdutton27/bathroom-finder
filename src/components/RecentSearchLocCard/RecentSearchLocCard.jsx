@@ -14,7 +14,7 @@ export default function RecentSearchLocCard({originName, originAddress, image}) 
       <Typography align="left" sx={{fontSize:"12px", position: "absolute", zIndex:"modal", left:"20px", top:"42px",}}>{originAddress}</Typography>
       {/* <Typography sx={{position: "absolute", zIndex:"modal", left:"20px", top:"10px",}}>{originAddress}</Typography> */}
 
-      <CardActionArea justifyContent="center" sx={{position:"absolute", top: "0px", right:"0px", marginRight:"5px", width: "60px", height: "70px"}}>
+      <CardActionArea sx={{position:"absolute", top: "0px", right:"0px", marginRight:"5px", width: "60px", height: "70px"}}>
         
       {image === "" ? <></>:
         <CardMedia

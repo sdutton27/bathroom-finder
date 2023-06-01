@@ -28,6 +28,7 @@ import { FavoritesContext } from '../../context/FavoritesContext'
 import FavoritesCard from '../../components/FavoritesCard/FavoritesCard'
 import { RecentSearchContext } from '../../context/RecentSearchContext'
 import { UserContext } from '../../context/UserContext'
+import { BathroomsContext } from '../../context/BathroomsContext'
 
 import RecentSearches from '../../components/RecentSearches/RecentSearches'
 
@@ -51,7 +52,8 @@ export default function MapPage() {
   const [centerCoords, setCenterCoords] = useState({ lat: 40.71427, lng: -74.00597 })
   const [bounds, setBounds] = useState('') // these will automatically be set for us pretty immediately? 
 
-  const [bathrooms, setBathrooms] = useState([])
+  //const [bathrooms, setBathrooms] = useState([])
+  const {bathrooms, setBathrooms} = useContext(BathroomsContext)
 
   const [childClicked, setChildClicked] = useState(null)
 
@@ -437,7 +439,8 @@ export default function MapPage() {
             <Typography>hi</Typography>
             </Grid> */}
             <Grid item xs={12} sx={{ height: '66vh', position: "relative", paddingLeft: "0px"}}>
-              <Map childClicked={childClicked} setChildClicked={setChildClicked} bathrooms={bathrooms} location={coordinates} zoomLevel={15} bounds={bounds} setBounds={setBounds} setCenterCoords={setCenterCoords} centerCoords={centerCoords} />
+              {/* <Map childClicked={childClicked} setChildClicked={setChildClicked} bathrooms={bathrooms} location={coordinates} zoomLevel={15} bounds={bounds} setBounds={setBounds} setCenterCoords={setCenterCoords} centerCoords={centerCoords} /> */}
+              <Map childClicked={childClicked} setChildClicked={setChildClicked} location={coordinates} zoomLevel={15} bounds={bounds} setBounds={setBounds} setCenterCoords={setCenterCoords} centerCoords={centerCoords} />
               {searchLocBase64 !== "" ?
                 <SearchCard image_src={searchLocBase64} originName={originName} originAddress={originAddress} />
                 // <img src={`data:image/jpeg;base64,${searchLocBase64}`} style={{opacity: '.7'}} />
@@ -478,7 +481,8 @@ export default function MapPage() {
               <BabyChangingStationIcon className="label" />
             </Grid>
           </Grid>
-          <BathroomList genderNeutralFilter={genderNeutralFilter} accessibleFilter={accessibleFilter} changingTableFilter={changingTableFilter}  originName={originName} originAddress={originAddress} childClicked={childClicked} bathrooms={bathrooms} />
+          {/* <BathroomList genderNeutralFilter={genderNeutralFilter} accessibleFilter={accessibleFilter} changingTableFilter={changingTableFilter}  originName={originName} originAddress={originAddress} childClicked={childClicked} bathrooms={bathrooms} /> */}
+          <BathroomList genderNeutralFilter={genderNeutralFilter} accessibleFilter={accessibleFilter} changingTableFilter={changingTableFilter}  originName={originName} originAddress={originAddress} childClicked={childClicked} />
           {/* <Grid item sx={{height: '66vh', overflow:'scroll'}}>
               {bathrooms?.map((bathroom, i)=>(
             

@@ -11,11 +11,32 @@ export const HeartButton = ({bathroom, size}) => {
     const {favorites, addToFavorites, removeFromFavorites, inFavorites} = useContext(FavoritesContext)                                
     const {currentPage} = useContext(NavContext)
 
+    const [isFavorited, setIsFavorited] = useState(inFavorites(bathroom))
+
     // console.log(size)
     useEffect(()=>{
       console.log("favorites have changed")
       console.log(`${inFavorites(bathroom)} is the favorite status for ${bathroom.name}`)
+      setIsFavorited(inFavorites(bathroom))
     },[favorites])
+
+    useEffect(()=>{
+
+    },[])
+
+    const handleClick = (e) => {
+      console.log(e)
+      console.log(e.value)
+      if (inFavorites(bathroom) === true) {
+        removeFromFavorites(bathroom);
+        // setIsFavorited(false);
+      } else {
+        addToFavorites(bathroom);
+        // setIsFavorited(true);
+      }
+      console.log("bathroom is " + inFavorites(bathroom))
+      console.log({favorites})
+    }
 
     return (
     //   <div align={{currentPage === 'map' ? "center" : "right"}}>
@@ -25,14 +46,19 @@ export const HeartButton = ({bathroom, size}) => {
         : <div align="right">} */}
         <div align={(currentPage === 'map') ? "center" : "right"}>
         <UseAnimations
-          reverse={inFavorites(bathroom)}
-          onClick={() => {
-            {inFavorites(bathroom)? 
-                removeFromFavorites(bathroom)
-                : 
-                addToFavorites(bathroom)
-            }
-          }}
+          //reverse={inFavorites(bathroom)}
+          reverse={isFavorited}
+          onClick={handleClick
+            // () => {
+            // {inFavorites(bathroom)? 
+            //     removeFromFavorites(bathroom);
+            //     setIsFavorited(false);
+            //     : 
+            //     addToFavorites(bathroom);
+            //     setIsFavorited(true);
+            // }
+          // }
+        }
           size={size}
           // wrapperStyle={{ marginTop: '8px' }}
           animation={heart}

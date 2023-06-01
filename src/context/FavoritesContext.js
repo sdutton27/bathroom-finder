@@ -105,13 +105,13 @@ const FavoritesContextProvider = ({children}) => {
             console.log(data)
 
         if (data.status === 'ok') {
-            setFavorites(prev => {
+            setFavorites(prev => (
                 // const index = prev.indexOf(bathroom)
                 // if (index !== -1) {
                 //     return prev.splice(index, 1)
                 // }
-                return prev.filter(e => e !== bathroom)
-            })
+                prev.filter(e => e !== bathroom)
+            ))
         }
     }
 

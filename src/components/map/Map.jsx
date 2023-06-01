@@ -17,13 +17,15 @@ import { Icon } from '@iconify/react'
 import locationIcon from '@iconify/icons-mdi/map-marker'
 
 import { MarkerClusterer } from "@googlemaps/markerclusterer";
+import { BathroomsContext } from '../../context/BathroomsContext'
 
-const Map = ({childClicked, setChildClicked, bathrooms, location, zoomLevel, bounds, setBounds, setCenterCoords, centerCoords}) => {
+const Map = ({childClicked, setChildClicked, location, zoomLevel, bounds, setBounds, setCenterCoords, centerCoords}) => {
   const {currentTheme} = useContext(ThemeContext)
   // console.log({location})
   // console.log(zoomLevel)
   // const [photoLat, setPhotoLat] = useState(0.0)
   // const [photoLng, setPhotoLng] = useState(0.0)
+  const {bathrooms, setBathrooms, filteredBathrooms} = useContext(BathroomsContext)
 
   // const getPhotoLat = () => {
   //   if (bounds != '') {
@@ -114,7 +116,13 @@ const Map = ({childClicked, setChildClicked, bathrooms, location, zoomLevel, bou
         >
           {/* <Typography sx={{zIndex:100}}>hi</Typography> */}
           {/* {bathrooms?.map((bathroom, i)=><BathroomPin key={i} lat={bathroom.latitude} lng={bathroom.longitude} index={i}/>)} */}
-          {bathrooms?.map((bathroom, i)=>(
+          {filteredBathrooms !== [] ? 
+            filteredBathrooms?.map((bathroom, i)=>(
+              <BathroomPin key={i} selected={Number(childClicked) === i} lat={bathroom.latitude} lng={bathroom.longitude} index={i}/>
+              // <BathroomPin key={i} position={{lat:bathroom.latitude, lng:bathroom.longitude}} index={i}/>
+            ))
+          :
+          bathrooms?.map((bathroom, i)=>(
             <BathroomPin key={i} selected={Number(childClicked) === i} lat={bathroom.latitude} lng={bathroom.longitude} index={i}/>
             // <BathroomPin key={i} position={{lat:bathroom.latitude, lng:bathroom.longitude}} index={i}/>
           ))}

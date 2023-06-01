@@ -1,13 +1,16 @@
-import React, {useEffect, useState, createRef} from 'react'
+import React, {useEffect, useState, useContext, createRef} from 'react'
 
 import { Grid } from '@mui/material'
 import BathroomCard from '../BathroomCard/BathroomCard'
+import { BathroomsContext } from '../../context/BathroomsContext'
 
-export default function BathroomList({genderNeutralFilter, accessibleFilter, changingTableFilter, bathrooms, childClicked, originName, originAddress}) {
+export default function BathroomList({genderNeutralFilter, accessibleFilter, changingTableFilter, childClicked, originName, originAddress}) {
     // console.log({childClicked})
     const [refs, setRefs] = useState([])
 
-    const [filteredBathrooms, setFilteredBathrooms] = useState([])
+    const {bathrooms, setBathrooms, filteredBathrooms, setFilteredBathrooms} = useContext(BathroomsContext)
+
+    // const [filteredBathrooms, setFilteredBathrooms] = useState([])
 
     useEffect(()=>{
         getFilteredBathrooms()
@@ -20,10 +23,13 @@ export default function BathroomList({genderNeutralFilter, accessibleFilter, cha
             setRefs(references)
         }
         
-        const references = Array(bathrooms?.length).fill().map((_, i)=> refs[i] || createRef())
-        setRefs(references)
+        // const references = Array(bathrooms?.length).fill().map((_, i)=> refs[i] || createRef())
+        // setRefs(references)
         // console.log({genderNeutralFilter})
     },[bathrooms])
+
+    // on dismount reset filtered bathrooms 
+    useEffect( () => () => setFilteredBathrooms([]), [] );
 
     useEffect(()=>{
         getFilteredBathrooms()

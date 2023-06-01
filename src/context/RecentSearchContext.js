@@ -41,8 +41,9 @@ const RecentSearchContextProvider = ({children}) => {
         // console.log(data)
         // console.log("search id : ")
         // console.log(data.data.search_id)
-        setCurrentSearchID(data.data.search_id)
-        setRecentSearches((prev)=>{
+        if (data.status === 'ok') {
+            setCurrentSearchID(data.data.search_id)
+            setRecentSearches((prev)=>{
             return [
               {
                 "origin_name" : originName,
@@ -56,6 +57,8 @@ const RecentSearchContextProvider = ({children}) => {
               ...prev,
             ]
           })
+        }
+        
 
         return data
     }

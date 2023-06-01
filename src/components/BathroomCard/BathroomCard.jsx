@@ -45,16 +45,16 @@ export default function BathroomCard({ bathroom, index, cardWidth,
         if (selected === true) {
             //refProp?.current?.scrollIntoView({ behavior: "smooth", block: "start"}) 
             // refProp?.current?.scrollTop = 0;
-            console.log({refProp})
+            // console.log({refProp})
             //refProp?.current?.scroll({top:0,behavior:'smooth'})
-            console.log(refProp.current.offsetTop)
+            // console.log(refProp.current.offsetTop)
             const topPos = refProp?.current?.offsetTop 
             //document.getElementById('bathroom-list')?.scrollTop = topPos;
             document.getElementById('bathroom-list')?.scrollTo({top:topPos-118,behavior:'smooth'});
             // refProp?.current?.scrollTo({top:0,behavior:'smooth'})
             addRecentSearchBathroom(bathroom)
         }
-    },[selected])
+    },[selected, refProp])
   
     return (
     <Card sx={{marginBottom:"5px", width: `${cardWidth}px`}}>
