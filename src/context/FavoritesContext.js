@@ -52,10 +52,10 @@ const FavoritesContextProvider = ({children}) => {
         // console.log(bathroom.bathroom)
         // bathroom = bathroom.bathroom 
 
-        const data = await addBathroom(bathroom)
+        // const data = await addBathroom(bathroom)
 
         // have to change this 
-        if (data.status === 'ok' || data.message === "That bathroom is already in the database.") { // if the bathroom hadn't yet been added to Bathrooms...we need to also add bathrooms to favorites that were already added
+        // if (data.status === 'ok' || data.message === "That bathroom is already in the database.") { // if the bathroom hadn't yet been added to Bathrooms...we need to also add bathrooms to favorites that were already added
             // add in backend
             const url = `http://127.0.0.1:5000/api/favorites/favorite/${bathroom.id}`;
             const options = {
@@ -81,9 +81,9 @@ const FavoritesContextProvider = ({children}) => {
                 })
             }
 
-        } else {
-            console.log('status was not ok, not added')
-        }
+        // } else {
+        //     console.log('status was not ok, not added')
+        // }
     }
 
     const removeFromFavorites = async (bathroom) => {

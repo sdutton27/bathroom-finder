@@ -73,7 +73,7 @@ export default function ThemeSwitch() {
     return (
         <FormControlLabel
                                                     // if they check it then they want dark mode 
-            control={<MaterialUISwitch sx={{ m:1, position: "absolute", right: "-5px", 
+            control={<MaterialUISwitch sx={{ m:1, position: "fixed", right: "-5px", 
               bottom: "0px" }} checked={isDark} onChange={(e)=>{handleThemeChange(e)}}/>}
             label=""
         />

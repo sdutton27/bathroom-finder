@@ -15,9 +15,10 @@ export default function BathroomList({genderNeutralFilter, accessibleFilter, cha
     useEffect(()=>{
         getFilteredBathrooms()
         // map each bathroom- we only need the index, so _ for first value
-        if (filteredBathrooms !== []) {
+        if (filteredBathrooms.length > 0) {
             const references = Array(filteredBathrooms?.length).fill().map((_, i)=> refs[i] || createRef())
             setRefs(references)
+            console.log({references})
         } else {
             const references = Array(bathrooms?.length).fill().map((_, i)=> refs[i] || createRef())
             setRefs(references)
@@ -71,7 +72,7 @@ export default function BathroomList({genderNeutralFilter, accessibleFilter, cha
     }
 
   return (
-    <Grid id="bathroom-list" container item alignItems="flex-start" justifyContent="center" sx={{height: '77vh', overflow:'scroll'}}>
+    <Grid id="bathroom-list" container item alignItems="flex-start" justifyContent="center" sx={{maxHeight: '77vh', overflow:'scroll'}}>
               {/* <Typography align="center" sx={{color:'text.primary'}}>Search Results Here</Typography> */}
               
               {filteredBathrooms !==[]?

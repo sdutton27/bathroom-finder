@@ -33,7 +33,8 @@ import { BathroomsContext } from '../../context/BathroomsContext'
 import RecentSearches from '../../components/RecentSearches/RecentSearches'
 
 export default function MapPage() {
-  const [coordinates, setCoordinates] = useState({ lat: 40.71427, lng: -74.00597 })
+  const [coordinates, setCoordinates] = useState({ lat: null, lng: null })
+  // const [coordinates, setCoordinates] = useState({ lat: 40.71427, lng: -74.00597 })
   const { setCurrentPage } = useContext(NavContext)
   const [switchChecked, setSwitchChecked] = useState(false)
 
@@ -52,7 +53,8 @@ export default function MapPage() {
 
   const [searchLocPhoto, setSearchLocPhoto] = useState('')
   const [searchLocBase64, setSearchLocBase64] = useState('')
-  const [centerCoords, setCenterCoords] = useState({ lat: 40.71427, lng: -74.00597 })
+  // const [centerCoords, setCenterCoords] = useState({ lat: 40.71427, lng: -74.00597 })
+  const [centerCoords, setCenterCoords] = useState({ lat: null, lng: null })
   const [bounds, setBounds] = useState('') // these will automatically be set for us pretty immediately? 
 
   //const [bathrooms, setBathrooms] = useState([])
@@ -61,7 +63,7 @@ export default function MapPage() {
   const [childClicked, setChildClicked] = useState(null)
 
   const { getFavorites } = useContext(FavoritesContext)
-  const { recentSearches, setRecentSearches, addRecentSearchLoc, getRecentSearches } = useContext(RecentSearchContext)
+  const { recentSearches, setRecentSearches, addRecentSearchLoc, getRecentSearches, searchLocChanged, setSearchLocChanged } = useContext(RecentSearchContext)
 
   // for the filtering buttons - just going to do this on frontend 
   const [genderNeutralFilter, setGenderNeutralFilter] = useState(false)
@@ -107,11 +109,12 @@ export default function MapPage() {
       // on google maps documentation
       const lat = autocomplete.getPlace().geometry.location.lat();
       const lng = autocomplete.getPlace().geometry.location.lng();
-
+      getGooglePlacesInfo(locationSearchVal);
       // let's set the coordinates
       setCoordinates({ lat, lng });
       setCenterCoords({ lat, lng });
-      getGooglePlacesInfo(locationSearchVal);
+      // try getGooglePlacesInfo after
+      //getGooglePlacesInfo(locationSearchVal);
       // setCurrentLoc(locationSearchVal); // the text for the photo
       setLocationSearchVal(""); // reset the search
       //searchBathroomsAroundLoc(lat, lng); // deleting this because it will already be called since the bounds will change 
@@ -191,6 +194,21 @@ export default function MapPage() {
         //                   ) // we will eventually add destination here too 
 
       } catch {
+        // setRecentSearches((prev) => {
+        //   return [
+        //     ...prev,
+        //     {
+        //       "origin_name": data['data']['candidates'][0]['name'],
+        //       "origin_address": data['data']['candidates'][0]['formatted_address'],
+        //       "photo_base_64": "",
+        //       "destination_name": "", // someday this will not be null
+        //       "destination_address": "" // someday this will not be null
+        //     }
+        //   ]
+        // })
+        // try putting this back after setting recent searches
+        // await addRecentSearchLoc(data['data']['candidates'][0]['name'], data['data']['candidates'][0]['formatted_address'], ""
+        // ) // we will eventually add destination here too 
         setRecentSearches((prev) => {
           return [
             ...prev,
@@ -205,7 +223,6 @@ export default function MapPage() {
         })
         addRecentSearchLoc(data['data']['candidates'][0]['name'], data['data']['candidates'][0]['formatted_address'], ""
         ) // we will eventually add destination here too 
-
 
         setSearchLocPhoto('')
         setSearchLocBase64('')
@@ -257,7 +274,7 @@ export default function MapPage() {
       //     }
       //   ]
       // })
-      addRecentSearchLoc(originName, originAddress, photo_64,
+      await addRecentSearchLoc(originName, originAddress, photo_64,
       ) // we will eventually add destination here too 
     } else {
       // setRecentSearches((prev)=>{
@@ -272,7 +289,7 @@ export default function MapPage() {
       //     }
       //   ]
       // })
-      addRecentSearchLoc(originName, originAddress, ""
+      await addRecentSearchLoc(originName, originAddress, ""
       ) // we will eventually add destination here too 
 
     }
@@ -321,6 +338,9 @@ export default function MapPage() {
 
   useEffect(() => {
     setCurrentPage('map');
+    getRecentSearches();
+    getFavorites();
+
     let location_on = false
     navigator.geolocation.getCurrentPosition(({ coords: { latitude, longitude } }) => {
       // console.log({latitude, longitude})
@@ -330,19 +350,22 @@ export default function MapPage() {
       // setOriginName("My Location")
       // setOriginAddress(" ")
       // console.log("set new origin name")
-      // addRecentSearchLoc("My Location", "My Location")
+      //addRecentSearchLoc("My Location", "My Location")
+      addRecentSearchLoc(originName, originAddress)
 
     })
     // if the user location is not on, then set to NY
-    if (!location_on) {
-      setOriginName("New York")
-      setOriginAddress("New York")
-      console.log("set new origin name")
-      addRecentSearchLoc("New York", "New York")
-    }
+    // if (!location_on) {
+    //   setOriginName("New York")
+    //   setOriginAddress("New York")
+    //   console.log("set new origin name")
+    //   addRecentSearchLoc("New York", "New York")
+    // }
 
-    getRecentSearches();
-    getFavorites();
+    // getRecentSearches();
+    // getFavorites();
+    
+    
     // getUser();
     
 

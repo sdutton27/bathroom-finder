@@ -26,7 +26,7 @@ export default function BathroomCard({ bathroom, index, cardWidth,
     
     const {favorites, setFavorites, addToFavorites, removeFromFavorites, inFavorites} = useContext(FavoritesContext)                                
 
-    const { addRecentSearchBathroom } = useContext(RecentSearchContext)
+    const { currentSearchID, addRecentSearchBathroom, searchLocChanged, setSearchLocChanged } = useContext(RecentSearchContext)
     // console.log(selected)
     // console.log("bathroom is: " + JSON.stringify(bathroom))
     // if a place is selected, move into that view 
@@ -48,13 +48,25 @@ export default function BathroomCard({ bathroom, index, cardWidth,
             // console.log({refProp})
             //refProp?.current?.scroll({top:0,behavior:'smooth'})
             // console.log(refProp.current.offsetTop)
+            console.log({refProp})
             const topPos = refProp?.current?.offsetTop 
+            console.log({topPos})
             //document.getElementById('bathroom-list')?.scrollTop = topPos;
             document.getElementById('bathroom-list')?.scrollTo({top:topPos-118,behavior:'smooth'});
             // refProp?.current?.scrollTo({top:0,behavior:'smooth'})
-            addRecentSearchBathroom(bathroom)
+            
+            //addRecentSearchBathroom(bathroom)
+            addBathroom()
         }
     },[selected, refProp])
+
+    const addBathroom = async () =>{
+        // this needs to wait for the other one to finish
+        if (currentSearchID !== "") {
+            await addRecentSearchBathroom(bathroom)
+        }
+        
+    }
   
     return (
     <Card sx={{marginBottom:"5px", width: `${cardWidth}px`}}>

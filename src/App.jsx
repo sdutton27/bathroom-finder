@@ -69,7 +69,7 @@ export default function App() {
              <Route path="/profile" element={<ProfilePage />}/>
          </Routes>
          {/* {showHomepage === 'visible-home-page' ?  */}
-         <ThemeSwitch className="theme-switch" style={{position: 'absolute', marginLeft: '30px', right:'0', bottom:'0'}}/>
+         <ThemeSwitch className="theme-switch" style={{position: 'fixed', marginLeft: '30px', right:'0', bottom:'0'}}/>
          {/* : <></>} */}
          <GlobalStyles styles={{ body: { backgroundColor: theme.palette.background.default } }} />
       </div>

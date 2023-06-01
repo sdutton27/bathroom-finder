@@ -11,6 +11,8 @@ const RecentSearchContextProvider = ({children}) => {
     const { inFavorites, addBathroom } = useContext(FavoritesContext)
     const [currentSearchID, setCurrentSearchID] = useState("")
 
+    const [searchLocChanged, setSearchLocChanged] = useState(false)
+
     const getRecentSearches = async () => {
         const url = "http://127.0.0.1:5000/api/recent-search/all"
         const options = {
@@ -56,12 +58,14 @@ const RecentSearchContextProvider = ({children}) => {
 
         const res = await fetch(url, options);
         const data = await res.json();
+        console.log("adding new recent search location")
         console.log({data})
         // console.log(data)
         // console.log("search id : ")
         // console.log(data.data.search_id)
         if (data.status === 'ok') {
             setCurrentSearchID(data.data.search_id)
+            console.log(`search id should be updated to : ${data.data.search_id}`)
             setRecentSearches((prev)=>{
             return [
               {
@@ -83,6 +87,7 @@ const RecentSearchContextProvider = ({children}) => {
     }
 
     const addRecentSearchBathroom = async (bathroom) => {
+        console.log("add recent search bathroom is starting")
         let bathroomID = "";
         if (inFavorites(bathroom)) {
             // then we know the bathroom exists in the DB so we can just use the ID
@@ -96,6 +101,7 @@ const RecentSearchContextProvider = ({children}) => {
                 bathroomID = bathroom.id 
             } 
         }
+        console.log({currentSearchID})
         // now that the bathroom should be in the DB
         if (bathroomID !== "") {
             const url = "http://127.0.0.1:5000/api/recent-search/bathroom"
@@ -195,7 +201,8 @@ const RecentSearchContextProvider = ({children}) => {
 
     const recentSearchContext = {
         recentSearches, setRecentSearches, addRecentSearchLoc, currentSearchID, 
-        setCurrentSearchID, addRecentSearchBathroom, getRecentSearches, deleteOldSearches
+        setCurrentSearchID, addRecentSearchBathroom, getRecentSearches, deleteOldSearches,
+        searchLocChanged, setSearchLocChanged
     }
 
     return (
