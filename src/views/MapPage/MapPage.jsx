@@ -2,7 +2,7 @@ import React, { useContext, useEffect, useState } from 'react'
 import { NavContext } from '../../context/NavContext'
 import Map from '../../components/Map/Map' // import the map here
 import SearchBar from '../../components/SearchBar/SearchBar'
-
+import { useNavigate } from 'react-router-dom';
 import GoogleMapReact from 'google-map-react'
 import { Autocomplete } from '@react-google-maps/api'
 
@@ -42,8 +42,11 @@ export default function MapPage() {
   //const [placeID, setPlaceID] = useState(""); we could have this if we wanted to search via place_id instead of the title but the title works just fine 
   // const [currentLoc, setCurrentLoc] = useState("");
 
-  const [originName, setOriginName] = useState("New York City");
-  const [originAddress, setOriginAddress] = useState("New York, NY");
+  // const [originName, setOriginName] = useState("New York City");
+  // const [originAddress, setOriginAddress] = useState("New York, NY");
+
+  const [originName, setOriginName] = useState("My Location");
+  const [originAddress, setOriginAddress] = useState(" ");
   // we will also have destination
 
 
@@ -68,6 +71,11 @@ export default function MapPage() {
   const [loadingBathrooms, setLoadingBathrooms] = useState(false)
 
   const { user, getUser } = useContext(UserContext)
+
+  const navigate = useNavigate();
+  if(Object.keys(user).length === 0) {
+    navigate('/')
+  }
 
   const handleSearchChange = (e) => {
     setLocationSearchVal(e.target.value)
@@ -313,17 +321,30 @@ export default function MapPage() {
 
   useEffect(() => {
     setCurrentPage('map');
+    let location_on = false
+    navigator.geolocation.getCurrentPosition(({ coords: { latitude, longitude } }) => {
+      // console.log({latitude, longitude})
+      location_on = true
+      setCoordinates({ lat: latitude, lng: longitude })
+      setCenterCoords({ lat: latitude, lng: longitude })
+      // setOriginName("My Location")
+      // setOriginAddress(" ")
+      // console.log("set new origin name")
+      // addRecentSearchLoc("My Location", "My Location")
+
+    })
+    // if the user location is not on, then set to NY
+    if (!location_on) {
+      setOriginName("New York")
+      setOriginAddress("New York")
+      console.log("set new origin name")
+      addRecentSearchLoc("New York", "New York")
+    }
+
     getRecentSearches();
     getFavorites();
     // getUser();
-    navigator.geolocation.getCurrentPosition(({ coords: { latitude, longitude } }) => {
-      // console.log({latitude, longitude})
-      setCoordinates({ lat: latitude, lng: longitude })
-      setCenterCoords({ lat: latitude, lng: longitude })
-      setOriginName("My Location")
-      setOriginAddress("My Location")
-
-    })
+    
 
 
     // setFavorites([{"msg":1},{"msg":2},{"msg":3}])
@@ -352,8 +373,8 @@ export default function MapPage() {
   // }
 
   useEffect(()=>{
-    console.log({genderNeutralFilter})
-  },[genderNeutralFilter])
+    console.log({originName})
+  },[originName])
 
   const handleCheck = (e) => {
     console.log(e.target.name)
@@ -374,6 +395,8 @@ export default function MapPage() {
   // }
   const theme = useTheme()
   return (
+    <>
+    {(Object.keys(user).length === 0) ? <></> : 
     <Box className='page-container map-page' sx={{ backgroundColor: 'background.default', flexGrow: 1 }}>
       {/* {/* <Grid container spacing={2} sx={{marginTop: '0px', marginLeft: '0px', width: '100%'}}>
         {/* Map
@@ -460,7 +483,7 @@ export default function MapPage() {
 
             </Grid>
 
-            <Typography sx={{ fontSize: "20px", color: 'text.primary', marginTop: "10px" }}>Recent Searches</Typography>
+            <Typography sx={{ fontSize: "20px", color: 'text.primary', marginTop: "10px" }}><b>Recent Searches</b></Typography>
               
             <RecentSearches />
           
@@ -469,7 +492,7 @@ export default function MapPage() {
         </Grid>
         <Grid container item xs={12} sm={4} direction="column">
           <Grid item sx={{paddingTop: "0px !important"}}>
-            <Typography align="center" sx={{ fontSize: "20px", color: 'text.primary' }}>Nearby Bathrooms</Typography>
+            <Typography align="center" sx={{ fontSize: "20px", color: 'text.primary' }}><b>Nearby Bathrooms</b></Typography>
           </Grid>
           <Grid item container justifyContent="center" direction="row">
             <Grid item className="toggle">
@@ -547,5 +570,7 @@ export default function MapPage() {
           ))}
         </Box> */}
     </Box>
+  }
+  </>
   )
 }

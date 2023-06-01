@@ -1,6 +1,6 @@
 import React, { useContext, useEffect } from 'react'
 import { NavContext } from '../../context/NavContext';
-
+import { useNavigate } from 'react-router-dom';
 import { useTheme } from '@emotion/react';
 
 import { Box } from '@mui/material';
@@ -18,6 +18,12 @@ export default function FavoritesPage() {
   const {favorites, getFavorites} = useContext(FavoritesContext)
   const { user } = useContext(UserContext)
   const theme = useTheme()
+  const navigate = useNavigate();
+
+  if(Object.keys(user).length === 0) {
+    navigate('/')
+  }
+
   useEffect(()=>{
     setCurrentPage('favorites');
     getFavorites();
@@ -43,6 +49,8 @@ export default function FavoritesPage() {
 
 
   return (
+    <>
+    {(Object.keys(user).length === 0) ? <></> : 
     <div className="page-container" style={{backgroundColor: theme.palette.background.default}}>
       <h1>Favorites</h1>
       <Box align="center">
@@ -52,5 +60,7 @@ export default function FavoritesPage() {
           ))}
         </Box>
     </div>
+    }
+    </>
   )
 }

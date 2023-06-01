@@ -256,8 +256,9 @@ html, body, #root {
 }
 
 #icon {
-  margin-top: 155px;
-  width: 52px;
+  margin-top: 30vh;
+  left: 35vw;
+  width: 30px;
   height: auto;
   /* position: relative; */
   position:absolute;
@@ -293,8 +294,8 @@ html, body, #root {
 /* keyhole */
 
 #keyhole {
-  width: 10px;
-  height: 16px;
+  width: 8px;
+  height: 10px;
   border-radius: 25px;
   position: absolute;
   top: 65%;

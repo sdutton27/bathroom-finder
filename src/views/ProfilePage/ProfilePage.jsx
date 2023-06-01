@@ -11,6 +11,7 @@ import Avatar from '@mui/material/Avatar';
 import Paper from '@mui/material/Paper';
 import Grid from '@mui/material/Grid';
 import Modal from '@mui/material/Modal';
+import { useNavigate } from 'react-router-dom';
 
 import './profilepage.css'
 
@@ -19,12 +20,18 @@ export default function ProfilePage() {
   const {setCurrentPage} = useContext(NavContext)
   const {currentTheme} = useContext(ThemeContext)
   const theme = useTheme()
+  const navigate = useNavigate();
+  if(Object.keys(user).length === 0) {
+    navigate('/')
+  }
   useEffect(()=>{
     setCurrentPage('profile');
     // console.log(user.profile_pic)
   },[])
 
   return (
+    <>
+    {(Object.keys(user).length === 0) ? <></> : 
     <Box className="page-container" sx={{backgroundColor: 'background.default', display: 'flex', flexDirection:'row', justifyContent:'center'}}>
       <Paper elevation={3} sx={{width: '90%', height: '50%', borderRadius:'15px', marginTop: '20px', textAlign:'center'}}>
         {/* <Typography variant="h3" sx={{color:'text.primary'}}>My Profile</Typography> */}
@@ -55,6 +62,8 @@ export default function ProfilePage() {
         <Button onClick={logMeOut}>Logout</Button>
       </Paper>
     </Box>
+  }
+  </>
   )
 }
 

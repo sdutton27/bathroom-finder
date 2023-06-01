@@ -36,12 +36,19 @@
   .curtain__panel {
     display: flex;
     align-items: center;
-    background: orange;
+    /* background: orange; */
+    /* background-image: url("bathroom-doors.jpeg");
+    /* background-size:cover; */
+    /* background-repeat:no-repeat; */ 
+    background: rgb(95, 87, 53);
+
+
     color: #fff;
     float: left;
     position: relative;
-    width: 50%;
+    /* width: 50%; */
     height: 100vh;
+    /* height:200vh; */
     transition: all 2s ease-out;
     z-index: 1;
   }
@@ -50,11 +57,14 @@
     background-size:contain;
     background-repeat:no-repeat;
     background-position:right;
+    /* BACKGROUND IMAGE HERE */
+    background-image: url("bathroom-doors-left.jpeg");
     /* background-color:rgb(65, 46, 43); */
     /* background-color:rgb(184, 36, 36); */
-    background-color:rgb(21, 49, 17);
+    /* background-color:rgb(21, 49, 17); */
     /* align-self:flex-end; */
     justify-content: flex-end;
+    width: 50%;
     
   }
 
@@ -67,9 +77,12 @@
     background-size:contain;
     background-repeat:no-repeat;
     background-position:left;
+    background-image: url("bathroom-doors-right.jpeg");
     /* background-color:rgb(65, 46, 43); */
-    background-color:rgb(21, 49, 17);
+    /* background-color:rgb(21, 49, 17); */
     justify-content: flex-start;
+    width: 50%;
+    /* BACKGROUND IMAGE HERE */
    
   }
 
